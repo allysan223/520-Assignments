@@ -29,6 +29,9 @@ Fraction multiply ( Fraction a, Fraction b );
 /*! Reduce a fraction
  *  \param a fraction argument
  */
-Fraction reduce ( Fraction a);
+Fraction reduce ( Fraction a );
+
+// Recursive function to return gcd of a and b 
+int gcd ( int a, int b ) ; 
 
 #endif
