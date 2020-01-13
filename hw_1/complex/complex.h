@@ -20,9 +20,8 @@ typedef struct {
  */
 Complex add ( Complex a, Complex b );
 
-/*! Negates two complex numbers
- *  \param a The first complex number
- *  \param b The second complex number
+/*! Negates a complex number
+ *  \param a The complex number
  */
 Complex negate ( Complex a );
 
@@ -32,9 +31,8 @@ Complex negate ( Complex a );
  */
 Complex multiply ( Complex a, Complex b );
 
-/*! magnitude of complex numbers
+/*! magnitude of complex number
  *  \param a The first complex number
- *  \param b The second complex number
  */
 double magnitude ( Complex a );
 

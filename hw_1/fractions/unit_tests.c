@@ -15,6 +15,14 @@ namespace {
         EXPECT_EQ(reduce(a).num,-7);
         EXPECT_EQ(reduce(a).den,11);
 
+        a = (Fraction) { 8, 4 };
+        EXPECT_EQ(reduce(a).num,2);
+        EXPECT_EQ(reduce(a).den,1);
+
+        a = (Fraction) { -12, -16 };
+        EXPECT_EQ(reduce(a).num,3);
+        EXPECT_EQ(reduce(a).den,4);
+
         a = (Fraction) { 0, 33 };
         EXPECT_EQ(reduce(a).num,0);
         EXPECT_EQ(reduce(a).den,33);

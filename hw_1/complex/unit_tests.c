@@ -17,6 +17,21 @@ namespace {
         EXPECT_EQ(negate(b).im,-5);
         EXPECT_EQ(magnitude(a),5);
         EXPECT_EQ(magnitude(b),sqrt(29));
+
+        a = (Complex) { 0, 2 };
+        b = (Complex) { -3, 0 };
+        EXPECT_EQ(add(a,b).real,-3);
+        EXPECT_EQ(add(a,b).im,2);
+        EXPECT_EQ(multiply(a,b).real,0);
+        EXPECT_EQ(multiply(a,b).im,-6);
+        EXPECT_EQ(negate(a).real,0);
+        EXPECT_EQ(negate(a).im,-2);
+        EXPECT_EQ(negate(b).real,3);
+        EXPECT_EQ(negate(b).im,0);
+        EXPECT_EQ(magnitude(a),2);
+        EXPECT_EQ(magnitude(b),3);
+
+
     }
 
 }
