@@ -29,3 +29,23 @@ void reverse_in_place(int arr[], int size) {
     }
 
 }
+
+int *reverse(int arr[], int size) {
+    int * a = (int *) calloc(size,sizeof(int));
+    if(!a)
+        return NULL;
+
+    int i, arrIndex, revIndex;
+    int temp;
+    revIndex = 0;
+    arrIndex = size - 1;
+    while(arrIndex >= 0)
+    {
+        /* Copy value from original array to reverse array */
+        a[revIndex] = arr[arrIndex];
+        
+        revIndex++;
+        arrIndex--;
+    }
+    return a;
+}

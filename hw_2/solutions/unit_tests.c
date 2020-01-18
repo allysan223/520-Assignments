@@ -20,4 +20,15 @@ namespace {
         ASSERT_EQ(x[4],10);                            
  }   
 
+    TEST(HW2,Reverse) {
+        int x[] = {10,20,30,40,50};
+        int * y = reverse(x,5);
+        ASSERT_EQ(y[0],50);
+        ASSERT_EQ(y[1],40);       
+        ASSERT_EQ(y[2],30);   
+        ASSERT_EQ(y[3],20);   
+        ASSERT_EQ(y[4],10);  
+        free(y);
+ }
+
 }
