@@ -30,5 +30,24 @@ namespace {
         ASSERT_EQ(y[4],10);  
         free(y);
  }
+    TEST(HW2,NumInstances) {
+        int a[] = { 1, 1, 2, 3, 1, 4, 5, 2, 20, 5 };
+        ASSERT_EQ(num_instances(a,10,1), 3);
+        ASSERT_EQ(num_instances(a,10,20), 1);
+        ASSERT_EQ(num_instances(a,10,13), 0);
+ }
 
+    TEST(HW2,PointMap) {
+        Point a[] = { { 1,2,3 }, { 2,3,4 } };
+        Point * b = map(a,2,negate);
+        for(int i=0; i<2; i++) {
+            ASSERT_EQ(b[0].z,-3);
+            ASSERT_EQ(b[1].z,-4);
+            ASSERT_EQ(b[i].x,-a[i].x);
+            ASSERT_EQ(b[i].y,-a[i].y);
+            ASSERT_EQ(b[i].z,-a[i].z);
+        }
+        free(b);
+
+    }
 }
