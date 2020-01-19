@@ -22,6 +22,13 @@ namespace {
         ASSERT_EQ(rpn_pop(),2.0);
         ASSERT_EQ(rpn_error(), OK);
         rpn_free();
+
+        rpn_init();
+        for (int i = 0; i < 205; i++){
+            rpn_push(1.0);
+        }
+        ASSERT_EQ(rpn_error(), OK);
+        rpn_free();
     }
 
     TEST(HW2,RPN_ERRORS) {

@@ -8,7 +8,9 @@
 static double * stack;
 static int initialized = 0;
 static int top = 0;
+static int stackSize = INITIAL_STACK_SIZE;
 static RPN_ERROR error = OK;
+
 
 void rpn_show() {
     printf("--->\n");
@@ -30,9 +32,18 @@ void rpn_init() {
 void rpn_push(double x) {
     if ( !initialized ) {
         error = NOT_INITIALIZED_ERROR;
-    } else {
+    } else if ( top > stackSize ) {
+        stackSize = stackSize * 2;
+        stack = (double *) realloc(stack, sizeof(double)*stackSize);
+        //printf("stack size doubled to: %d\n", stackSize);
         stack[top] = x;
         top++;
+    }else {
+        stack[top] = x;
+        top++;
+        //if(top > 198){
+        //    printf("new top = %d\n", top);
+        //}
     }
 }
 
