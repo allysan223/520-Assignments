@@ -14,6 +14,14 @@ namespace {
         ASSERT_EQ(rpn_pop(),-1.5);
         ASSERT_EQ(rpn_error(), OK);
         rpn_free();
+
+        rpn_init();
+        rpn_push(2.0);
+        rpn_push(1.0);
+        rpn_div();
+        ASSERT_EQ(rpn_pop(),2.0);
+        ASSERT_EQ(rpn_error(), OK);
+        rpn_free();
     }
 
     TEST(HW2,RPN_ERRORS) {
@@ -35,6 +43,10 @@ namespace {
         rpn_free();
 
         rpn_negate();
+        ASSERT_EQ(rpn_error(), NOT_INITIALIZED_ERROR);                                
+        rpn_free();
+
+        rpn_div();
         ASSERT_EQ(rpn_error(), NOT_INITIALIZED_ERROR);                                
         rpn_free();
 
@@ -73,7 +85,23 @@ namespace {
         rpn_negate();
         rpn_multiply();
         ASSERT_EQ(rpn_error(), OVERFLOW_ERROR);
-        rpn_free();        
+        rpn_free();    
+
+        rpn_init();
+        rpn_push(DBL_MAX);
+        rpn_push(.01);
+        rpn_negate();
+        rpn_div();
+        ASSERT_EQ(rpn_error(), OVERFLOW_ERROR);
+        rpn_free();
+
+        rpn_init();
+        rpn_push(10);
+        rpn_push(0);
+        rpn_negate();
+        rpn_div();
+        ASSERT_EQ(rpn_error(), DIVIDE_BY_ZERO_ERROR);
+        rpn_free();       
 
     }    
 
