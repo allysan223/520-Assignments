@@ -24,6 +24,14 @@ namespace {
         rpn_free();
 
         rpn_init();
+        rpn_push(-2.0);
+        rpn_push(1.0);
+        rpn_div();
+        ASSERT_EQ(rpn_pop(),-2.0);
+        ASSERT_EQ(rpn_error(), OK);
+        rpn_free();
+
+        rpn_init();
         for (int i = 0; i < 205; i++){
             rpn_push(1.0);
         }

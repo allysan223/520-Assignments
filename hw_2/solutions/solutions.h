@@ -9,7 +9,7 @@
 
 int add_one(int x);
 int running_total(int x);
-void reverse_in_place(int arr[], int size);
+void reverse_in_place(int arr[], int len);
 int *reverse(int arr[], int size);
 int num_instances(int arr[], int len, int val);
 

@@ -6,27 +6,25 @@ int add_one(int x) {
 }
 
 int running_total(int num) {
-  static int x = 0; /* note: must be a literal constant,
-                      *  not a computed value */
-        
+  static int x = 0;    
   x = x + num;
   return x;
 }
 
-void reverse_in_place(int arr[], int size) {
-    int i, arrIndex, revIndex;
+void reverse_in_place(int arr[], int len) {
+    int i, arrayIndex, revIndex;
     int temp;
+    arrayIndex = len - 1;
     revIndex = 0;
-    arrIndex = size - 1;
-    while(revIndex < arrIndex)
+    while(revIndex < arrayIndex)
     {
-        /* Copy value from original array to reverse array */
+        /* Copy value from orig array to new array */
         temp = arr[revIndex];
-        arr[revIndex] = arr[arrIndex];
-        arr[arrIndex] = temp;
-        
+        arr[revIndex] = arr[arrayIndex];
+        arr[arrayIndex] = temp;
+        //increment and de-increment
+        arrayIndex--;
         revIndex++;
-        arrIndex--;
     }
 
 }
@@ -36,17 +34,17 @@ int *reverse(int arr[], int size) {
     if(!a)
         return NULL;
 
-    int i, arrIndex, revIndex;
+    int i, revIndex, arrayIndex;
     int temp;
     revIndex = 0;
-    arrIndex = size - 1;
-    while(arrIndex >= 0)
+    arrayIndex = size - 1;
+    while(arrayIndex >= 0)
     {
         /* Copy value from original array to reverse array */
-        a[revIndex] = arr[arrIndex];
-        
+        a[revIndex] = arr[arrayIndex];
+        //increment and de-increment
+        arrayIndex--;
         revIndex++;
-        arrIndex--;
     }
     return a;
 }
@@ -57,6 +55,7 @@ int *reverse(int arr[], int size) {
 
         while(arrIndex >= 0)
         {
+            //keep count of instances if appears
             if (arr[arrIndex] == val){
                 instances++;
             }
@@ -68,14 +67,12 @@ int *reverse(int arr[], int size) {
 
 Point negate(Point p) {
     Point points = { -p.x, -p.y, -p.z };
-    //printf("negate:\npoints = %lf\n", points.x);
-    //printf("points = %lf\n", points.y);
-    //printf("points = %lf\n", points.z);
-
     return points;
     }  
 
 
+//returns a newly allocated array whose values are the values of the 
+//function argument applied to the array argument
 Point *map(Point arr[], int len, Point (*f) (Point)) {
     Point * points = (Point *) calloc(len,sizeof(Point));
 
