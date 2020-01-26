@@ -259,4 +259,30 @@ namespace {
         DynamicArray_destroy(da1);   
     }
 
+    TEST(DynamicArray, Range) {
+        DynamicArray * a = DynamicArray_range(0, 1, 0.1); /* yields [ 0, 0.1, 0.2, ..., 1.0 ] */
+        ASSERT_EQ(DynamicArray_size(a),11);
+        int index = 0;
+        for (double i=0; i<= 1; i+= 0.1) {
+            ASSERT_EQ(DynamicArray_get(a,index),i);
+            index++;
+        }
+
+        DynamicArray_destroy(a);   
+    }
+
+    TEST(DynamicArray, Concat) {
+        DynamicArray * a = DynamicArray_range(2, 3, 1); /* yields [ 0, 0.1, 0.2, ..., 1.0 ] */
+        DynamicArray * b = DynamicArray_range(0, 6, .75); 
+        printf("Concat B string: %s\n", DynamicArray_to_string(b));       
+        DynamicArray * c = DynamicArray_concat(a, b);
+        //ASSERT_EQ(DynamicArray_size(a),11);
+
+        printf("Concat string: %s\n", DynamicArray_to_string(c)); 
+
+        DynamicArray_destroy(a);   
+        DynamicArray_destroy(b);
+        DynamicArray_destroy(c);
+    }
+
 }

@@ -263,4 +263,45 @@ DynamicArray * DynamicArray_copy ( const DynamicArray * da ) {
     return new_da;
 }
 
+DynamicArray * DynamicArray_range ( double a, double b, double step) {
+    DynamicArray * new_da = DynamicArray_new();
+    for ( double val=a; val <= b; val += step){
+        DynamicArray_push(new_da, val);
+    }
+    return new_da;
+}
+
+void DynamicArray_sort (DynamicArray * da ) {
+    double temp;
+    int i, j;
+    for (i = 0; i < DynamicArray_size(da); i++)
+    {
+	    for (j = i + 1; j < DynamicArray_size(da); j++)
+	    {
+		    if(DynamicArray_get(da,i) > DynamicArray_get(da,j))
+		    {
+			    temp = DynamicArray_get(da,i);
+			    DynamicArray_set(da,i,DynamicArray_get(da,j));
+			    DynamicArray_set(da,j,temp);
+		    }
+		
+	    }
+    }
+
+}
+
+DynamicArray * DynamicArray_concat ( const DynamicArray * a, const DynamicArray * b ) {
+    DynamicArray * new_da = DynamicArray_copy(a);
+    //add values from second array
+    for ( int i=0; i < DynamicArray_size(b); i++ ) {
+        DynamicArray_push(new_da, DynamicArray_get(b,i));
+    }
+    printf("Concat FUNC before sort string: %s\n", DynamicArray_to_string(new_da)); 
+    DynamicArray_sort(new_da);
+    printf("Concat FUNC after sort string: %s\n", DynamicArray_to_string(new_da)); 
+    return new_da;
+}
+
+
+
   
