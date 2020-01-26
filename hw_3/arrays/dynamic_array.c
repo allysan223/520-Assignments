@@ -296,9 +296,9 @@ DynamicArray * DynamicArray_concat ( const DynamicArray * a, const DynamicArray 
     for ( int i=0; i < DynamicArray_size(b); i++ ) {
         DynamicArray_push(new_da, DynamicArray_get(b,i));
     }
-    printf("Concat FUNC before sort string: %s\n", DynamicArray_to_string(new_da)); 
+    //printf("Concat FUNC before sort string: %s\n", DynamicArray_to_string(new_da)); 
     DynamicArray_sort(new_da);
-    printf("Concat FUNC after sort string: %s\n", DynamicArray_to_string(new_da)); 
+    //printf("Concat FUNC after sort string: %s\n", DynamicArray_to_string(new_da)); 
     return new_da;
 }
 

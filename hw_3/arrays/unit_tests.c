@@ -272,9 +272,8 @@ namespace {
     }
 
     TEST(DynamicArray, Concat) {
-        DynamicArray * a = DynamicArray_range(2, 3, 1); /* yields [ 0, 0.1, 0.2, ..., 1.0 ] */
-        DynamicArray * b = DynamicArray_range(0, 6, .75); 
-        printf("Concat B string: %s\n", DynamicArray_to_string(b));       
+        DynamicArray * a = DynamicArray_range(-2, 3, 1); /* yields [ 0, 0.1, 0.2, ..., 1.0 ] */
+        DynamicArray * b = DynamicArray_range(0, 6, .75);     
         DynamicArray * c = DynamicArray_concat(a, b);
         //ASSERT_EQ(DynamicArray_size(a),11);
 
