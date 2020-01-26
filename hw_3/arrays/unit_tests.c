@@ -124,6 +124,139 @@ namespace {
         }
         DynamicArray_destroy(t);    
         DynamicArray_destroy(y);                    
-    }         
+    }   
+
+    /*! Mathematical operations */
+    TEST(DynamicArray, Min) {
+        DynamicArray * da = DynamicArray_new();
+        double x = 5.0;
+        while ( x < 10 ) {
+            DynamicArray_push(da, x);  
+            x += 0.25;
+        }
+        ASSERT_EQ(DynamicArray_min(da),5.0);
+        DynamicArray_destroy(da);   
+
+        DynamicArray * da1 = DynamicArray_new();
+        //DynamicArray * da = DynamicArray_new();
+        DynamicArray_push(da1, 3.0); 
+        DynamicArray_push(da1, 5.0);  
+        DynamicArray_push(da1, 2.0);
+        DynamicArray_push(da1, -5.0);  
+        DynamicArray_push(da1, 10.0);   
+        printf("MIN test Intermediate Result: %s\n", 
+               DynamicArray_to_string(da1)); 
+
+        ASSERT_EQ(DynamicArray_min(da1),-5.0);
+        DynamicArray_destroy(da1);   
+    }    
+
+    TEST(DynamicArray, Max) {
+        DynamicArray * da = DynamicArray_new();
+        double x = 5.0;
+        while ( x < 10 ) {
+            DynamicArray_push(da, x);  
+            x += 0.25;
+        }
+        ASSERT_EQ(DynamicArray_max(da),9.75);
+        DynamicArray_destroy(da);   
+
+        DynamicArray * da1 = DynamicArray_new();
+        //DynamicArray * da = DynamicArray_new();
+        DynamicArray_push(da1, 3.0); 
+        DynamicArray_push(da1, 5.0);  
+        DynamicArray_push(da1, 12.0);
+        DynamicArray_push(da1, -5.0);  
+        DynamicArray_push(da1, 10.0);   
+
+        ASSERT_EQ(DynamicArray_max(da1),12.0);
+        DynamicArray_destroy(da1);   
+    }    
+
+    TEST(DynamicArray, Mean) {
+        DynamicArray * da = DynamicArray_new();
+        double x = 5.0;
+        while ( x < 10 ) {
+            DynamicArray_push(da, 1.0);  
+            x += 1;
+        }
+        ASSERT_EQ(DynamicArray_mean(da),1);
+        DynamicArray_destroy(da);   
+
+        DynamicArray * da1 = DynamicArray_new();
+        //DynamicArray * da = DynamicArray_new();
+        DynamicArray_push(da1, 3.0); 
+        DynamicArray_push(da1, 5.0);  
+        DynamicArray_push(da1, 12.0);
+        DynamicArray_push(da1, -5.0);  
+        DynamicArray_push(da1, 10.0);   
+
+        ASSERT_EQ(DynamicArray_mean(da1),5.0);
+        DynamicArray_destroy(da1);   
+    }
+
+    TEST(DynamicArray, Median) {
+        DynamicArray * da = DynamicArray_new();
+        DynamicArray_push(da, 1.0); 
+        DynamicArray_push(da, 3.0);  
+        DynamicArray_push(da, 3.0);
+        DynamicArray_push(da, 6.0);  
+        DynamicArray_push(da, 7.0); 
+        DynamicArray_push(da, 8.0); 
+        DynamicArray_push(da, 9.0); 
+        ASSERT_EQ(DynamicArray_median(da),6);
+        DynamicArray_destroy(da);   
+
+        DynamicArray * da1 = DynamicArray_new();
+        //DynamicArray * da = DynamicArray_new();
+        DynamicArray_push(da1, 1.0); 
+        DynamicArray_push(da1, 2.0);  
+        DynamicArray_push(da1, 3.0);
+        DynamicArray_push(da1, 4.0);  
+        DynamicArray_push(da1, 5.0); 
+        DynamicArray_push(da1, 6.0);
+        DynamicArray_push(da1, 8.0);  
+        DynamicArray_push(da1, 9.0);   
+        ASSERT_EQ(DynamicArray_median(da1),4.5);
+        DynamicArray_destroy(da1);   
+    }
+
+    TEST(DynamicArray, Sum) {
+        DynamicArray * da = DynamicArray_new();
+        ASSERT_EQ(DynamicArray_sum(da),0);
+        DynamicArray_destroy(da);   
+
+        DynamicArray * da1 = DynamicArray_new();
+        //DynamicArray * da = DynamicArray_new();
+        DynamicArray_push(da1, 1.0); 
+        DynamicArray_push(da1, 2.0);  
+        DynamicArray_push(da1, 3.0);
+        DynamicArray_push(da1, -4.0);  
+        DynamicArray_push(da1, 5.0); 
+        ASSERT_EQ(DynamicArray_sum(da1),7);
+        DynamicArray_destroy(da1);   
+    }
+
+    TEST(DynamicArray, Copy) {
+        DynamicArray * da = DynamicArray_new();
+        DynamicArray_push(da, 1.0); 
+        DynamicArray_push(da, 3.0);  
+        DynamicArray_push(da, 3.0);
+        DynamicArray_push(da, 6.0);  
+        DynamicArray_push(da, 7.0); 
+        DynamicArray_push(da, 8.0); 
+        DynamicArray_push(da, 9.0); 
+
+        DynamicArray * da1 = DynamicArray_copy(da);
+
+        ASSERT_EQ(DynamicArray_size(da),DynamicArray_size(da1));
+
+        for (int i=0; i<DynamicArray_size(da); i++) {
+            ASSERT_EQ(DynamicArray_get(da,i),DynamicArray_get(da1,i));
+        }
+
+        DynamicArray_destroy(da);   
+        DynamicArray_destroy(da1);   
+    }
 
 }

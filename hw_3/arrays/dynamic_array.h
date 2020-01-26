@@ -41,12 +41,12 @@ DynamicArray * DynamicArray_map ( const DynamicArray *, double (*) (double) );
 /*! Return the first value in the given array. Throw a runtime error if the array is empty.
  *  \param da The array
  */
-double DynamicArray_last ( const DynamicArray * da );
+double DynamicArray_first ( const DynamicArray * da );
 
 /*! Return the first last in the given array. Throw a runtime error if the array is empty.
  *  \param da The array
  */
-double DynamicArray_first ( const DynamicArray * da );
+double DynamicArray_last ( const DynamicArray * da );
 
 /*! Return a copy of the array.
  *  \param da The array
@@ -68,11 +68,11 @@ DynamicArray * DynamicArray_concat ( const DynamicArray * a, const DynamicArray 
 
 /*! Mathematical operations
   */
-double DynamicArray_min ( const DynamicArray * da );
-double DynamicArray_max ( const DynamicArray * da );
-double DynamicArray_mean ( const DynamicArray * da );
-double DynamicArray_median ( const DynamicArray * da );
-double DynamicArray_sum ( const DynamicArray * da );
+double DynamicArray_min ( const DynamicArray * da ); //returns the minimum value in the array.
+double DynamicArray_max ( const DynamicArray * da ); //returns the maximum value in the array.
+double DynamicArray_mean ( const DynamicArray * da ); //returns the average value in the array.
+double DynamicArray_median ( const DynamicArray * da ); //returns the median value in the array.
+double DynamicArray_sum ( const DynamicArray * da ); //returns the sum of the values in the array (does not need to assert non-empty).
 
 /*! Returns 1 if the array is valid (meaning its buffer is not NULL) and 0 otherwize.
  */

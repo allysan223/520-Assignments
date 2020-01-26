@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
+#include <cfloat>
 
 /* private functions *********************************************************/
 
@@ -144,7 +145,7 @@ void DynamicArray_push_front(DynamicArray * da, double value) {
 
 double DynamicArray_pop(DynamicArray * da) {
     assert(DynamicArray_size(da) > 0);
-    double value = DynamicArray_get(da, DynamicArray_size(da)-1);
+    double value = DynamicArray_last(da);
     DynamicArray_set(da, DynamicArray_size(da)-1, 0.0);
     da->end--;
     return value;
@@ -152,14 +153,14 @@ double DynamicArray_pop(DynamicArray * da) {
 
 double DynamicArray_pop_front(DynamicArray * da) {
     assert(DynamicArray_size(da) > 0);
-    double value = DynamicArray_get(da, 0);
+    double value = DynamicArray_first(da);
     da->origin++;
     return value;    
 }
 
 DynamicArray * DynamicArray_map(const DynamicArray * da, double (*f) (double)) {
     assert(da->buffer != NULL);
-    DynamicArray * result = DynamicArray_new();
+    DynamicArray * result = DynamicArray_copy(da);
     for ( int i=0; i<DynamicArray_size(da); i++ ) {
         DynamicArray_set(result, i, f(DynamicArray_get(da, i)));
     }
@@ -180,3 +181,86 @@ DynamicArray * DynamicArray_subarray(DynamicArray * da, int a, int b) {
   return result;
 
 }
+
+/*! Mathematical operations */
+double DynamicArray_min ( const DynamicArray * da ) {
+    assert(DynamicArray_size(da) > 0);
+    double value = DBL_MAX;
+    for ( int i=0; i < DynamicArray_size(da); i++ ) {
+        if (DynamicArray_get(da,i) < value ){
+            value = DynamicArray_get(da,i);
+        }
+    }
+    return value;  
+}
+
+double DynamicArray_max ( const DynamicArray * da ) {
+    assert(DynamicArray_size(da) > 0);
+    double value = DBL_MIN;
+    for ( int i=0; i < DynamicArray_size(da); i++ ) {
+        if (DynamicArray_get(da,i) > value ){
+            value = DynamicArray_get(da,i);
+        }
+    }
+    return value;    
+}
+
+double DynamicArray_mean ( const DynamicArray * da ) {
+    assert(DynamicArray_size(da) > 0);
+    double sum = 0;
+    for ( int i=0; i < DynamicArray_size(da); i++ ) {
+        sum += DynamicArray_get(da,i);
+    }
+    double value = sum/DynamicArray_size(da);
+    return value;     
+}
+
+double DynamicArray_median ( const DynamicArray * da ) {
+    assert(DynamicArray_size(da) > 0);
+    double value = 0;
+    double midIndex = DynamicArray_size(da)/2;
+    //even number size
+    if (DynamicArray_size(da)%2 == 0) {
+        //printf("even size: %lf and %lf\n",DynamicArray_get(da,midIndex-1), DynamicArray_get(da,midIndex) );
+        value = (DynamicArray_get(da,midIndex-1) + DynamicArray_get(da,midIndex) ) / 2;
+    } else {
+        printf("odd size: %lf \n",midIndex);
+        value = (DynamicArray_get(da,midIndex));
+    }
+    return value;   
+}
+
+double DynamicArray_sum ( const DynamicArray * da ) {
+    double value = 0;
+    if (DynamicArray_size(da) == 0) {
+        return value;
+    } else {
+        for ( int i=0; i < DynamicArray_size(da); i++ ) {
+            value += DynamicArray_get(da,i);
+        }
+    }
+    return value;
+
+}
+
+
+double DynamicArray_first ( const DynamicArray * da ) {
+    assert(DynamicArray_size(da) > 0);
+    return DynamicArray_get(da, 0);
+}
+
+double DynamicArray_last ( const DynamicArray * da ) {
+    assert(DynamicArray_size(da) > 0);
+    return DynamicArray_get(da, DynamicArray_size(da)-1);
+}
+
+DynamicArray * DynamicArray_copy ( const DynamicArray * da ) {
+    DynamicArray * new_da = DynamicArray_new();
+    for ( int i=0; i < DynamicArray_size(da); i++ ) {
+        DynamicArray_push(new_da, DynamicArray_get(da,i));
+        }
+
+    return new_da;
+}
+
+  
