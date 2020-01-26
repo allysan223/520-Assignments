@@ -54,12 +54,17 @@ DynamicArray * DynamicArray_new(void) {
     da->buffer = (double *) calloc ( da->capacity, sizeof(double) ); 
     da->origin = da->capacity / 2;
     da->end = da->origin;
+
+    numArrays++;
+    //printf("New array func called, num %d\n", numArrays);
     return da;
 }
 
 void DynamicArray_destroy(DynamicArray * da) {
     free(da->buffer);
     da->buffer = NULL;
+    numArrays--;
+    //printf("Destroy array func called, num %d\n", numArrays);
     return;
 }
 
@@ -164,6 +169,7 @@ DynamicArray * DynamicArray_map(const DynamicArray * da, double (*f) (double)) {
     for ( int i=0; i<DynamicArray_size(da); i++ ) {
         DynamicArray_set(result, i, f(DynamicArray_get(da, i)));
     }
+    //numArrays--;
     return result;
 }
 
@@ -225,9 +231,10 @@ double DynamicArray_median ( const DynamicArray * da ) {
         //printf("even size: %lf and %lf\n",DynamicArray_get(da,midIndex-1), DynamicArray_get(da,midIndex) );
         value = (DynamicArray_get(new_da,midIndex-1) + DynamicArray_get(new_da,midIndex) ) / 2;
     } else {
-        printf("odd size: %lf \n",midIndex);
+        //printf("odd size: %lf \n",midIndex);
         value = (DynamicArray_get(new_da,midIndex));
     }
+    DynamicArray_destroy(new_da);
     return value;   
 }
 
@@ -276,17 +283,13 @@ DynamicArray * DynamicArray_sort (const DynamicArray * da ) {
     double temp;
     int i, j;
     DynamicArray * new_da = DynamicArray_copy(da);
-    for (i = 0; i < DynamicArray_size(new_da); i++)
-    {
-	    for (j = i + 1; j < DynamicArray_size(new_da); j++)
-	    {
-		    if(DynamicArray_get(new_da,i) > DynamicArray_get(new_da,j))
-		    {
+    for (i = 0; i < DynamicArray_size(new_da); i++){
+	    for (j = i + 1; j < DynamicArray_size(new_da); j++){
+		    if(DynamicArray_get(new_da,i) > DynamicArray_get(new_da,j)){
 			    temp = DynamicArray_get(new_da,i);
 			    DynamicArray_set(new_da,i,DynamicArray_get(new_da,j));
 			    DynamicArray_set(new_da,j,temp);
 		    }
-		
 	    }
     }
     return new_da;
@@ -301,6 +304,7 @@ DynamicArray * DynamicArray_concat ( const DynamicArray * a, const DynamicArray 
     //printf("Concat FUNC before sort string: %s\n", DynamicArray_to_string(new_da)); 
     new_da = DynamicArray_sort(new_da);
     //printf("Concat FUNC after sort string: %s\n", DynamicArray_to_string(new_da)); 
+    numArrays--; /* sorts adds an 'extra' array, so delete */
     return new_da;
 }
 
@@ -327,10 +331,20 @@ DynamicArray * DynamicArray_take ( const DynamicArray * da, int n ) {
             }
         }
     }
-
-
     return new_da;
     
+}
+
+int DynamicArray_num_arrays() {
+    return numArrays;
+}
+
+int DynamicArray_is_valid(const DynamicArray * da) {
+    if (da->buffer != NULL) {
+        return 1;
+    } else {
+        return 0;
+    }
 }
 
   

@@ -10,6 +10,8 @@ typedef struct {
     double * buffer;
 } DynamicArray;
 
+static int numArrays = 0;
+
 /* Constructors / Destructors ************************************************/
 
 DynamicArray * DynamicArray_new(void);

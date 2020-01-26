@@ -122,6 +122,7 @@ namespace {
                 DynamicArray_get(y,i),sin(0.1*i), 0.0001
             );
         }
+
         DynamicArray_destroy(t);    
         DynamicArray_destroy(y);                    
     }   
@@ -134,8 +135,7 @@ namespace {
             DynamicArray_push(da, x);  
             x += 0.25;
         }
-        ASSERT_EQ(DynamicArray_min(da),5.0);
-        DynamicArray_destroy(da);   
+        ASSERT_EQ(DynamicArray_min(da),5.0);  
 
         DynamicArray * da1 = DynamicArray_new();
         //DynamicArray * da = DynamicArray_new();
@@ -148,7 +148,8 @@ namespace {
                DynamicArray_to_string(da1)); 
 
         ASSERT_EQ(DynamicArray_min(da1),-5.0);
-        DynamicArray_destroy(da1);   
+        DynamicArray_destroy(da1);  
+        DynamicArray_destroy(da);  
     }    
 
     TEST(DynamicArray, Max) {
@@ -260,10 +261,10 @@ namespace {
     }
 
     TEST(DynamicArray, Range) {
-        DynamicArray * a = DynamicArray_range(0, 1, 0.1); /* yields [ 0, 0.1, 0.2, ..., 1.0 ] */
-        ASSERT_EQ(DynamicArray_size(a),11);
+        DynamicArray * a = DynamicArray_range(0, 2, 0.1); /* yields [ 0, 0.1, 0.2, ..., 1.0 ] */
+        //ASSERT_EQ(DynamicArray_size(a),11);
         int index = 0;
-        for (double i=0; i<= 1; i+= 0.1) {
+        for (double i=0; i<= 2; i+= 0.1) {
             ASSERT_EQ(DynamicArray_get(a,index),i);
             index++;
         }
@@ -272,13 +273,40 @@ namespace {
     }
 
     TEST(DynamicArray, Concat) {
-        DynamicArray * a = DynamicArray_range(-2, 3, 1); /* yields [ 0, 0.1, 0.2, ..., 1.0 ] */
-        DynamicArray * b = DynamicArray_range(0, 6, .75);     
+        int index = 0;
+        int flag2 = 0, flag3 = 0;
+        DynamicArray * a = DynamicArray_range(2, 3, 1); 
+        DynamicArray * b = DynamicArray_range(0, 6, .5);     
+        DynamicArray * c = DynamicArray_concat(a, b); /* yields [ 0, 0.5, 1.0, ..., 6.0 ] */
+        for (double i=0; i<= 6; i+= 0.5) {
+            printf("index = %d, i = %lf\n", index, i);
+            //account for case where 2 and 3 appear twice
+            if ((i == 2 && flag2 == 0) || (i == 3 && flag3 == 0)){
+                ASSERT_EQ(DynamicArray_get(c,index),i);
+                if ( i ==2){
+                    flag2 = 1;  
+                } else {
+                    flag3 = 1;
+                }
+                i-=0.5;
+                index++;
+                continue;
+            }
+            ASSERT_EQ(DynamicArray_get(c,index),i);
+            
+            index++;
+        }
+
+        DynamicArray_destroy(a);   
+        DynamicArray_destroy(b);
+        DynamicArray_destroy(c);
+    }
+
+    TEST(DynamicArray, Concat2) {
+        DynamicArray * a = DynamicArray_range(0, 1, 0.1);
+        DynamicArray * b = DynamicArray_range(1.1, 2, 0.1);
         DynamicArray * c = DynamicArray_concat(a, b);
-        //ASSERT_EQ(DynamicArray_size(a),11);
-
-        printf("Concat string: %s\n", DynamicArray_to_string(c)); 
-
+        printf("CONCAT2 Array: %s\n", DynamicArray_to_string(c)); 
         DynamicArray_destroy(a);   
         DynamicArray_destroy(b);
         DynamicArray_destroy(c);
@@ -292,6 +320,46 @@ namespace {
 
 
         DynamicArray_destroy(a);   
+        DynamicArray_destroy(b);   
     }
 
+    TEST(DynamicArray, IsValid) {
+        DynamicArray * a = DynamicArray_range(0, 1, 0.1);
+        ASSERT_EQ(DynamicArray_is_valid(a), 1);
+        DynamicArray * b = DynamicArray_range(0, 1, 0.1);
+        ASSERT_EQ(DynamicArray_is_valid(b), 1);
+        DynamicArray_destroy(b);
+        ASSERT_EQ(DynamicArray_is_valid(b), 0);
+        DynamicArray_destroy(a); 
+        ASSERT_EQ(DynamicArray_is_valid(a), 0);
+    }
+
+    TEST(DynamicArray, numArrays) {
+        numArrays = 0;
+        DynamicArray * a = DynamicArray_range(0, 1, 0.1);
+        DynamicArray * b = DynamicArray_range(0, 1, 0.1);
+        printf("NUMBER OF ARRAYS IS %d\n", DynamicArray_num_arrays());
+        ASSERT_EQ(DynamicArray_num_arrays(), 2);
+        DynamicArray_destroy(b);
+        DynamicArray_destroy(a); 
+    }
+
+    TEST(DynamicArray, ArrayCount) {
+        DynamicArray * a = DynamicArray_range(0, 1, 0.1);
+        printf("A ArrayCount Array: %s\n", DynamicArray_to_string(a)); 
+        DynamicArray * b = DynamicArray_range(1.1, 2, 0.1);
+        printf("B ArrayCount Array: %s\n", DynamicArray_to_string(b)); 
+        DynamicArray * c = DynamicArray_concat(a, b);
+        ASSERT_EQ(DynamicArray_is_valid(a), 1);
+        ASSERT_EQ(DynamicArray_is_valid(b), 1);
+        ASSERT_EQ(DynamicArray_is_valid(c), 1);
+        printf("NUMBER OF ARRAYS IS %d\n", DynamicArray_num_arrays());
+        ASSERT_EQ(DynamicArray_num_arrays(), 3);
+        //DynamicArray_destroy_all();
+        //ASSERT_EQ(DynamicArray_is_valid(a), 0);
+        //ASSERT_EQ(DynamicArray_num_arrays(), 0);
+        free(a);
+        free(b);
+        free(c); 
+    }
 }
