@@ -30,7 +30,7 @@ void DynamicArray_print_debug_info(const DynamicArray *);
 
 void DynamicArray_push(DynamicArray *, double);
 void DynamicArray_push_front(DynamicArray *, double);
-void DynamicArray_sort (DynamicArray * da );
+DynamicArray * DynamicArray_sort (const DynamicArray * da );
 
 double DynamicArray_pop(DynamicArray *);
 double DynamicArray_pop_front(DynamicArray *);

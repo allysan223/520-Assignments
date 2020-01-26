@@ -219,13 +219,14 @@ double DynamicArray_median ( const DynamicArray * da ) {
     assert(DynamicArray_size(da) > 0);
     double value = 0;
     double midIndex = DynamicArray_size(da)/2;
+    DynamicArray * new_da = DynamicArray_sort(da);
     //even number size
     if (DynamicArray_size(da)%2 == 0) {
         //printf("even size: %lf and %lf\n",DynamicArray_get(da,midIndex-1), DynamicArray_get(da,midIndex) );
-        value = (DynamicArray_get(da,midIndex-1) + DynamicArray_get(da,midIndex) ) / 2;
+        value = (DynamicArray_get(new_da,midIndex-1) + DynamicArray_get(new_da,midIndex) ) / 2;
     } else {
         printf("odd size: %lf \n",midIndex);
-        value = (DynamicArray_get(da,midIndex));
+        value = (DynamicArray_get(new_da,midIndex));
     }
     return value;   
 }
@@ -271,23 +272,24 @@ DynamicArray * DynamicArray_range ( double a, double b, double step) {
     return new_da;
 }
 
-void DynamicArray_sort (DynamicArray * da ) {
+DynamicArray * DynamicArray_sort (const DynamicArray * da ) {
     double temp;
     int i, j;
-    for (i = 0; i < DynamicArray_size(da); i++)
+    DynamicArray * new_da = DynamicArray_copy(da);
+    for (i = 0; i < DynamicArray_size(new_da); i++)
     {
-	    for (j = i + 1; j < DynamicArray_size(da); j++)
+	    for (j = i + 1; j < DynamicArray_size(new_da); j++)
 	    {
-		    if(DynamicArray_get(da,i) > DynamicArray_get(da,j))
+		    if(DynamicArray_get(new_da,i) > DynamicArray_get(new_da,j))
 		    {
-			    temp = DynamicArray_get(da,i);
-			    DynamicArray_set(da,i,DynamicArray_get(da,j));
-			    DynamicArray_set(da,j,temp);
+			    temp = DynamicArray_get(new_da,i);
+			    DynamicArray_set(new_da,i,DynamicArray_get(new_da,j));
+			    DynamicArray_set(new_da,j,temp);
 		    }
 		
 	    }
     }
-
+    return new_da;
 }
 
 DynamicArray * DynamicArray_concat ( const DynamicArray * a, const DynamicArray * b ) {
@@ -297,7 +299,7 @@ DynamicArray * DynamicArray_concat ( const DynamicArray * a, const DynamicArray 
         DynamicArray_push(new_da, DynamicArray_get(b,i));
     }
     //printf("Concat FUNC before sort string: %s\n", DynamicArray_to_string(new_da)); 
-    DynamicArray_sort(new_da);
+    new_da = DynamicArray_sort(new_da);
     //printf("Concat FUNC after sort string: %s\n", DynamicArray_to_string(new_da)); 
     return new_da;
 }

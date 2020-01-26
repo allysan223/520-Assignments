@@ -197,13 +197,13 @@ namespace {
 
     TEST(DynamicArray, Median) {
         DynamicArray * da = DynamicArray_new();
-        DynamicArray_push(da, 1.0); 
-        DynamicArray_push(da, 3.0);  
-        DynamicArray_push(da, 3.0);
-        DynamicArray_push(da, 6.0);  
-        DynamicArray_push(da, 7.0); 
-        DynamicArray_push(da, 8.0); 
         DynamicArray_push(da, 9.0); 
+        DynamicArray_push(da, 3.0);  
+        DynamicArray_push(da, 7.0);
+        DynamicArray_push(da, 8.0);  
+        DynamicArray_push(da, 3.0); 
+        DynamicArray_push(da, 6.0); 
+        DynamicArray_push(da, 1.0); 
         ASSERT_EQ(DynamicArray_median(da),6);
         DynamicArray_destroy(da);   
 
