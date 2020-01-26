@@ -54,6 +54,12 @@ double DynamicArray_last ( const DynamicArray * da );
  */
 DynamicArray * DynamicArray_copy ( const DynamicArray * da );
 
+/*! Return a sub-set of the array of n elements.
+ *  \param da The array
+ *  \param n, number of elements from begining or end
+ */
+DynamicArray * DynamicArray_take ( const DynamicArray * da, int n );
+
 /*! Return a new array whose elements span the given range and are step units apart.
  *  \param a The first value
  *  \param b The second value

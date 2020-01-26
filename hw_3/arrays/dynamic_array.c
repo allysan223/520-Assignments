@@ -305,5 +305,32 @@ DynamicArray * DynamicArray_concat ( const DynamicArray * a, const DynamicArray 
 }
 
 
+DynamicArray * DynamicArray_take ( const DynamicArray * da, int n ) {
+    DynamicArray * new_da = DynamicArray_new();
+    int i;
+    if (n > 0){
+        for ( i=0; i < n; i++ ) {
+            if ( i > DynamicArray_size(da)){
+                DynamicArray_push(new_da, 0);
+            } else {
+            DynamicArray_push(new_da, DynamicArray_get(da,i));
+            }
+        }
+    }
+
+    if (n < 0){
+        for ( i=n; i < 0; i++ ) {
+            if ( DynamicArray_size(da) + i < 0){
+                DynamicArray_push(new_da, 0);
+            } else {
+            DynamicArray_push(new_da, DynamicArray_get(da,DynamicArray_size(da) + i));
+            }
+        }
+    }
+
+
+    return new_da;
+    
+}
 
   

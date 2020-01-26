@@ -284,4 +284,14 @@ namespace {
         DynamicArray_destroy(c);
     }
 
+    TEST(DynamicArray, Take) {
+        DynamicArray * a = DynamicArray_range(0, 2, 1); /* yields [ 0, 0.1, 0.2, ..., 1.0 ] */
+        DynamicArray * b = DynamicArray_take(a, -5);
+        //ASSERT_EQ(DynamicArray_size(a),11);
+        printf("Take Array: %s\n", DynamicArray_to_string(b)); 
+
+
+        DynamicArray_destroy(a);   
+    }
+
 }
