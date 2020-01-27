@@ -262,7 +262,6 @@ namespace {
 
     TEST(DynamicArray, Range) {
         DynamicArray * a = DynamicArray_range(0, 2, 0.1); /* yields [ 0, 0.1, 0.2, ..., 1.0 ] */
-        //ASSERT_EQ(DynamicArray_size(a),11);
         int index = 0;
         for (double i=0; i<= 2; i+= 0.1) {
             ASSERT_EQ(DynamicArray_get(a,index),i);
@@ -270,6 +269,16 @@ namespace {
         }
 
         DynamicArray_destroy(a);   
+
+        DynamicArray * b = DynamicArray_range(5, 0, -1); 
+        index = 0;
+        for (int i=5; i>= 0; i--) {
+            ASSERT_EQ(DynamicArray_get(b,index),i);
+            index++;
+        }
+
+        DynamicArray_destroy(b); 
+
     }
 
     TEST(DynamicArray, Concat) {

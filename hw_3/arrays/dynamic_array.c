@@ -49,6 +49,7 @@ static void extend_buffer ( DynamicArray * da ) {
 /* public functions **********************************************************/
 
 DynamicArray * DynamicArray_new(void) {
+    static DynamicArray ** arrays = (DynamicArray **) malloc(sizeof(DynamicArray));
     DynamicArray * da = (DynamicArray *) malloc(sizeof(DynamicArray));
     da->capacity = DYNAMIC_ARRAY_INITIAL_CAPACITY;    
     da->buffer = (double *) calloc ( da->capacity, sizeof(double) ); 
@@ -273,9 +274,16 @@ DynamicArray * DynamicArray_copy ( const DynamicArray * da ) {
 
 DynamicArray * DynamicArray_range ( double a, double b, double step) {
     DynamicArray * new_da = DynamicArray_new();
-    for ( double val=a; val <= b; val += step){
-        DynamicArray_push(new_da, val);
+    if (step > 0){
+        for ( double val=a; val <= b; val += step){
+            DynamicArray_push(new_da, val);
+        }
+    } else if (step < 0) {
+        for ( double val=a; val >= b; val += step){
+            DynamicArray_push(new_da, val);
+        }
     }
+
     return new_da;
 }
 
