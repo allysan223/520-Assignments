@@ -274,11 +274,18 @@ DynamicArray * DynamicArray_copy ( const DynamicArray * da ) {
 
 DynamicArray * DynamicArray_range ( double a, double b, double step) {
     DynamicArray * new_da = DynamicArray_new();
+
     if (step > 0){
+        if (step > (b -a)){ //step is too big
+            return new_da;
+        }
         for ( double val=a; val <= b; val += step){
             DynamicArray_push(new_da, val);
         }
     } else if (step < 0) {
+        if (step < (b -a)){ //step is too big (negative)
+            return new_da;
+        }
         for ( double val=a; val >= b; val += step){
             DynamicArray_push(new_da, val);
         }
@@ -328,9 +335,7 @@ DynamicArray * DynamicArray_take ( const DynamicArray * da, int n ) {
             DynamicArray_push(new_da, DynamicArray_get(da,i));
             }
         }
-    }
-
-    if (n < 0){
+    } else if (n < 0){
         for ( i=n; i < 0; i++ ) {
             if ( DynamicArray_size(da) + i < 0){
                 DynamicArray_push(new_da, 0);
@@ -338,7 +343,8 @@ DynamicArray * DynamicArray_take ( const DynamicArray * da, int n ) {
             DynamicArray_push(new_da, DynamicArray_get(da,DynamicArray_size(da) + i));
             }
         }
-    }
+    } 
+
     return new_da;
     
 }

@@ -279,6 +279,12 @@ namespace {
 
         DynamicArray_destroy(b); 
 
+        DynamicArray * c = DynamicArray_range(0, 1, 0.7); 
+        ASSERT_EQ(DynamicArray_get(c,0),0);
+        ASSERT_EQ(DynamicArray_get(c,1),0.7);
+
+        DynamicArray_destroy(c); 
+
     }
 
     TEST(DynamicArray, Concat) {
@@ -324,12 +330,13 @@ namespace {
     TEST(DynamicArray, Take) {
         DynamicArray * a = DynamicArray_range(0, 2, 1); /* yields [ 0, 0.1, 0.2, ..., 1.0 ] */
         DynamicArray * b = DynamicArray_take(a, -5);
-        //ASSERT_EQ(DynamicArray_size(a),11);
+        DynamicArray * c = DynamicArray_take(a, 0);
+        ASSERT_EQ(DynamicArray_size(c),0);
         printf("Take Array: %s\n", DynamicArray_to_string(b)); 
-
 
         DynamicArray_destroy(a);   
         DynamicArray_destroy(b);   
+        DynamicArray_destroy(c);  
     }
 
     TEST(DynamicArray, IsValid) {
