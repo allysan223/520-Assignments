@@ -311,6 +311,8 @@ DynamicArray * DynamicArray_sort (const DynamicArray * da ) {
 }
 
 DynamicArray * DynamicArray_concat ( const DynamicArray * a, const DynamicArray * b ) {
+    assert(a->buffer != NULL);
+    assert(b->buffer != NULL);
     DynamicArray * new_da = DynamicArray_copy(a);
     //add values from second array
     for ( int i=0; i < DynamicArray_size(b); i++ ) {
@@ -325,6 +327,7 @@ DynamicArray * DynamicArray_concat ( const DynamicArray * a, const DynamicArray 
 
 
 DynamicArray * DynamicArray_take ( const DynamicArray * da, int n ) {
+    assert(da->buffer != NULL);
     DynamicArray * new_da = DynamicArray_new();
     int i;
     if (n > 0){

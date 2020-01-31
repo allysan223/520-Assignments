@@ -267,7 +267,6 @@ namespace {
             ASSERT_EQ(DynamicArray_get(a,index),i);
             index++;
         }
-
         DynamicArray_destroy(a);   
 
         DynamicArray * b = DynamicArray_range(5, 0, -1); 
@@ -276,14 +275,21 @@ namespace {
             ASSERT_EQ(DynamicArray_get(b,index),i);
             index++;
         }
-
         DynamicArray_destroy(b); 
 
         DynamicArray * c = DynamicArray_range(0, 1, 0.7); 
         ASSERT_EQ(DynamicArray_get(c,0),0);
         ASSERT_EQ(DynamicArray_get(c,1),0.7);
-
         DynamicArray_destroy(c); 
+
+        DynamicArray * d = DynamicArray_range(1, 0, -0.7); 
+        ASSERT_EQ(DynamicArray_get(d,0),1);
+        ASSERT_EQ(DynamicArray_get(d,1),1-0.7);
+        DynamicArray_destroy(d); 
+
+        DynamicArray * e = DynamicArray_range(1, 0, -2); 
+        ASSERT_EQ(DynamicArray_size(e),0);
+        DynamicArray_destroy(e); 
 
     }
 
