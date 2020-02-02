@@ -25,9 +25,19 @@ bool operator<(const Complex& a, const Complex& b) {
 
 }
 
+bool operator==(const Complex& a, const Complex& b) {
+    return (a.real() == b.real()) && (a.imag() == b.imag());
+}
+
 Complex operator*(const Complex& a, const Complex& b) {
     double realPart = a.real() * b.real() - a.imag() * b.imag();
     double imagPart = a.real() * b.imag() + a.imag() * b.real();
+  return Complex (realPart, imagPart);
+}
+
+Complex operator+(const Complex& a, const Complex& b) {
+    double realPart = a.real() + b.real();
+    double imagPart = a.imag() + b.imag();
   return Complex (realPart, imagPart);
 }
 

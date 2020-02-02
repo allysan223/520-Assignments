@@ -49,16 +49,30 @@ namespace {
         EXPECT_EQ(z.conjugate().imag(), -5);
     }
 
-    TEST(Complex,multiply) {
+    TEST(Complex,math) {
         Complex x(4,-3), y(2,5);
         Complex z = y * x;
+        Complex z1 = x + y;
         EXPECT_EQ(z.real(),23);
         EXPECT_EQ(z.imag(),14);
+        EXPECT_EQ(z1.real(),6);
+        EXPECT_EQ(z1.imag(),2);
 
         Complex a(0, 2), b(-3,0);
         Complex c = a * b;
         EXPECT_EQ(c.real(),0);
         EXPECT_EQ(c.imag(),-6);
+        c = a + b + b;
+        EXPECT_EQ(c.real(),-6);
+        EXPECT_EQ(c.imag(),2);
+    }
+
+    TEST(Complex,equals) {
+        Complex x(4,-3), y(2,5);
+        Complex z(2,5);
+        EXPECT_EQ(x == y, false);
+        EXPECT_EQ(z == y, true);
+        ASSERT_EQ(y, z); 
     }
     
 

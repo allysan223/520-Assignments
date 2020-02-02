@@ -24,8 +24,10 @@ class Complex {
 }; 
 
 bool operator<(const Complex& a, const Complex& b);
+bool operator==(const Complex& a, const Complex& b);
 
 Complex operator*(const Complex& a, const Complex& b);
+Complex operator+(const Complex& a, const Complex& b);
 
 
 
