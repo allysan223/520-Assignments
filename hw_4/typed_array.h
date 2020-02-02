@@ -160,7 +160,7 @@ ElementType TypedArray<ElementType>::pop() {
     if (size() == 0) {
         throw std::range_error("Cannot pop from an empty array");
     }
-    std::cout << offset_to_index(end) << "\n";
+    //std::cout << offset_to_index(end) << "\n";
     ElementType value = safe_get(offset_to_index(end)-1);
     //set(size()-1, nullptr);
     end--;
@@ -201,7 +201,7 @@ TypedArray<ElementType> TypedArray<ElementType>::concat(const TypedArray& other)
     TypedArray<ElementType> newArray;
     //add values from second array
     for ( i=0; i < size(); i++ ) {
-        std::cout << i << "\n";
+        //std::cout << i << "\n";
         newArray.push(safe_get(i));
     }
 

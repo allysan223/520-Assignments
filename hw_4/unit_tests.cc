@@ -3,9 +3,64 @@
 #include <assert.h>
 #include "typed_array.h"
 #include "point.h"
+#include "complex.h"
 #include "gtest/gtest.h"
 
 namespace {
+
+    TEST(Complex, create) {
+        Complex x(1,2), y(3);
+    }
+
+    template<typename T>
+    int compare(const T& x, const T& y) {
+        if ( x < y ) {
+            return -1;
+        } else if ( y < x ) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }    
+
+    TEST(Complex,Templates) {
+        EXPECT_EQ(compare(1.0, 2.0), -1);
+        EXPECT_EQ(compare(Complex(5,4), Complex(-3,4)), 1);
+    }
+
+    TEST(Complex,re_imag) {
+        Complex x(1,2), y(3);
+        EXPECT_EQ(x.real(), 1);
+        EXPECT_EQ(x.imag(), 2);
+    }
+
+    TEST(Complex,conjugate) {
+        Complex x(1,2), y(3);
+        y = x.conjugate();
+        EXPECT_EQ(x.real(), 1);
+        EXPECT_EQ(x.imag(), 2);
+        EXPECT_EQ(y.real(), 1);
+        EXPECT_EQ(y.imag(), -2);
+
+        Complex z(2,5);
+        z.conjugate();
+        EXPECT_EQ(z.real(), 2);
+        EXPECT_EQ(z.imag(), 5);
+        EXPECT_EQ(z.conjugate().imag(), -5);
+    }
+
+    TEST(Complex,multiply) {
+        Complex x(4,-3), y(2,5);
+        Complex z = y * x;
+        EXPECT_EQ(z.real(),23);
+        EXPECT_EQ(z.imag(),14);
+
+        Complex a(0, 2), b(-3,0);
+        Complex c = a * b;
+        EXPECT_EQ(c.real(),0);
+        EXPECT_EQ(c.imag(),-6);
+    }
+    
 
     TEST(TypedArray, Construction) {
         TypedArray<Point> b;
