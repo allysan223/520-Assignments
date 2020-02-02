@@ -102,6 +102,8 @@ namespace {
         EXPECT_EQ(d.get(3), 6);
         EXPECT_EQ(d.get(8), 6);
 
+
+        EXPECT_EQ(a.size(), 2);
     }
 
     TEST(TypedArray, Reverse) {
@@ -129,6 +131,22 @@ namespace {
         EXPECT_EQ(b.get(0), 3);
         EXPECT_EQ(b.get(2), 1);
     }
+
+    TEST(TypedArray, Add) {
+        TypedArray<int> a;
+        a.set(0,0);
+        a.set(1,1);
+        TypedArray<int> b = a + a + a; // yields [0,1,0,1,0,1]
+        EXPECT_EQ(b.get(0), 0);
+        EXPECT_EQ(b.get(1), 1);
+        EXPECT_EQ(b.get(3), 1);
+        EXPECT_EQ(b.get(4), 0);
+        EXPECT_EQ(b.size(), 6);
+
+        b = b + b + a;
+        EXPECT_EQ(b.size(), 14);
+    }
+
 
 
     TEST(TypedArray, Matrix) {

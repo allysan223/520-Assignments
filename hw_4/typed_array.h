@@ -11,10 +11,13 @@ class TypedArray {
 public:
 
     TypedArray();
+     // Copy constructor
     TypedArray(const TypedArray& other);
 
-    // Copy constructor
+    // Assignment operator
     TypedArray& operator=(const TypedArray& other);
+
+    TypedArray operator+(const TypedArray& other) const;
 
     // Destructor
     ~TypedArray();
@@ -83,6 +86,24 @@ TypedArray<ElementType>& TypedArray<ElementType>::operator=(const TypedArray<Ele
         }
     }
     return *this;
+}
+
+// Assignment operator: i.e TypedArray b + a 
+template <typename ElementType>
+TypedArray<ElementType> TypedArray<ElementType>::operator+(const TypedArray<ElementType>& other) const {
+    int i;
+    assert(buffer != NULL);
+    assert(other.buffer != NULL);
+    TypedArray<ElementType> newArrays;
+    //add values from second array
+    for ( i=0; i < size(); i++ ) {
+        newArrays.push(safe_get(i));
+    }
+
+    for ( i=0; i < other.size(); i++ ) {
+        newArrays.push(other.safe_get(i));
+    }
+    return newArrays;
 }
 
 // Destructor
