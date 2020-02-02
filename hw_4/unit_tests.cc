@@ -17,12 +17,71 @@ namespace {
         EXPECT_EQ(b.get(20).z, 5);
     }
 
-    TEST(TypedArray, Defaults) {
-        TypedArray<Point> x;
-        Point& y = x.get(3);
-        std::cout << x << "\n";
-        EXPECT_DOUBLE_EQ(y.magnitude(), 0.0);
+    TEST(TypedArray, Pop) {
+        TypedArray<Point> b;
+        b.set(0, Point(1,2,3));
+        b.set(1, Point(2,3,4));
+        EXPECT_EQ(b.get(0).x, 1);
+        EXPECT_EQ(b.pop().x, 2);
+        EXPECT_EQ(b.size(), 1);
+
     }
+
+    TEST(TypedArray, Pop2) {
+        TypedArray<int> b;
+        b.set(0, 5);
+        b.set(1, -9);
+        EXPECT_EQ(b.get(0), 5);
+        EXPECT_EQ(b.pop(), -9);
+        EXPECT_EQ(b.pop(), 5);
+        ASSERT_THROW(b.pop(), std::range_error);
+
+    }
+
+    TEST(TypedArray, Pop_front) {
+        TypedArray<int> b;
+        b.set(0, 5);
+        b.set(1, -9);
+        b.set(2, 1);
+        EXPECT_EQ(b.get(0), 5);
+        EXPECT_EQ(b.pop_front(), 5);
+        EXPECT_EQ(b.pop(), 1);
+        EXPECT_EQ(b.pop_front(), -9);
+        ASSERT_THROW(b.pop_front(), std::range_error);
+
+    }
+
+    TEST(TypedArray, Push) {
+        TypedArray<Point> b;
+        b.push(Point(1,2,3));
+        b.push(Point(2,3,4));
+        EXPECT_EQ(b.get(0).x, 1);
+        EXPECT_EQ(b.get(1).z, 4);
+        EXPECT_EQ(b.size(), 2);
+
+    }
+
+
+    TEST(TypedArray, Push_front) {
+        TypedArray<Point> b;
+        b.push(Point(1,2,3));
+        b.push_front(Point(2,3,4));
+        EXPECT_EQ(b.get(0).x, 2);
+        EXPECT_EQ(b.get(1).z, 3);
+        EXPECT_EQ(b.size(), 2);
+        b.push(Point(1,2,3));
+        b.push_front(Point(2,3,40));
+        b.push(Point(1,2,3));
+        b.push_front(Point(20,3,4));
+        EXPECT_EQ(b.get(0).x, 20);
+        EXPECT_EQ(b.get(1).z, 40);
+        EXPECT_EQ(b.size(), 6);
+        EXPECT_EQ(b.pop().x, 1);
+        EXPECT_EQ(b.pop_front().x, 20);
+
+
+    }
+
 
     TEST(TypedArray, Matrix) {
 

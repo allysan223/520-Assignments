@@ -27,6 +27,14 @@ public:
     // Setters
     void set(int index, ElementType value);
 
+
+    ElementType pop();
+    ElementType pop_front();
+
+    void push(const ElementType value);
+    void push_front(const ElementType value);
+
+
 private:
 
     int capacity,
@@ -122,6 +130,45 @@ void TypedArray<ElementType>::set(int index, ElementType value) {
         end = index_to_offset(index+1);
     }
 }
+
+template <typename ElementType>
+ElementType TypedArray<ElementType>::pop() {
+    if (size() == 0) {
+        throw std::range_error("Cannot pop from an empty array");
+    }
+    std::cout << offset_to_index(end) << "\n";
+    ElementType value = safe_get(offset_to_index(end)-1);
+    //set(size()-1, nullptr);
+    end--;
+    return value;
+}
+
+template <typename ElementType>
+ElementType TypedArray<ElementType>::pop_front() {
+    if (size() == 0) {
+        throw std::range_error("Cannot pop from an empty array");
+    }
+    ElementType value = safe_get(offset_to_index(origin));
+    //set(size()-1, nullptr);
+    origin++;
+    return value;
+}
+
+template <typename ElementType>
+void TypedArray<ElementType>::push(const ElementType value) {
+    set( size(), value );
+}
+
+template <typename ElementType>
+void TypedArray<ElementType>::push_front(const ElementType value) {
+    assert(buffer != NULL);
+    while (origin == 0 ) {
+        extend_buffer();
+    }
+    origin--;
+    set(0,value);
+}
+
 
 template <typename ElementType>
 std::ostream &operator<<(std::ostream &os, TypedArray<ElementType> &array)
