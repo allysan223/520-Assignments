@@ -78,8 +78,56 @@ namespace {
         EXPECT_EQ(b.size(), 6);
         EXPECT_EQ(b.pop().x, 1);
         EXPECT_EQ(b.pop_front().x, 20);
+    }
 
+    TEST(TypedArray, concat) {
+        TypedArray<int> a;
+        a.push(2);
+        a.push(4);
+        TypedArray<int> b;
+        b.push(5);
+        b.push(6);
+        b.push(7);
+        TypedArray<int> c = a.concat(b);
+        EXPECT_EQ(c.get(0), 2);
+        EXPECT_EQ(c.get(1), 4);
+        EXPECT_EQ(c.get(2), 5);
+        EXPECT_EQ(c.get(4), 7);
+        EXPECT_EQ(c.size(), 5);
 
+        TypedArray<int> d = a.concat(b).concat(c);
+        EXPECT_EQ(d.size(), 10);
+        EXPECT_EQ(d.get(0), 2);
+        EXPECT_EQ(d.get(1), 4);
+        EXPECT_EQ(d.get(3), 6);
+        EXPECT_EQ(d.get(8), 6);
+
+    }
+
+    TEST(TypedArray, Reverse) {
+        TypedArray<Point> b;
+        b.push(Point(1,2,3));
+        b.push(Point(2,3,4));
+        b.push(Point(6,7,8));
+        b = b.reverse();
+        EXPECT_EQ(b.get(0).x, 6);
+        EXPECT_EQ(b.get(2).z, 3);
+        EXPECT_EQ(b.size(), 3);
+
+    }
+
+    TEST(TypedArray, Reverse2) {
+        TypedArray<int> b;
+        b.push(3);
+        b.push(6);
+        b.push(1);
+        b = b.reverse();
+        EXPECT_EQ(b.get(0), 1);
+        EXPECT_EQ(b.get(2), 3);
+        EXPECT_EQ(b.size(), 3);
+        b = b.reverse();
+        EXPECT_EQ(b.get(0), 3);
+        EXPECT_EQ(b.get(2), 1);
     }
 
 

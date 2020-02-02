@@ -34,6 +34,9 @@ public:
     void push(const ElementType value);
     void push_front(const ElementType value);
 
+    TypedArray concat(const TypedArray& other);
+    TypedArray reverse();
+
 
 private:
 
@@ -169,6 +172,23 @@ void TypedArray<ElementType>::push_front(const ElementType value) {
     set(0,value);
 }
 
+template <typename ElementType>
+TypedArray<ElementType> TypedArray<ElementType>::concat(const TypedArray& other) {
+    int i;
+    assert(buffer != NULL);
+    assert(other.buffer != NULL);
+    TypedArray<ElementType> newArray;
+    //add values from second array
+    for ( i=0; i < size(); i++ ) {
+        std::cout << i << "\n";
+        newArray.push(safe_get(i));
+    }
+
+    for ( i=0; i < other.size(); i++ ) {
+        newArray.push(other.safe_get(i));
+    }
+    return newArray;
+}
 
 template <typename ElementType>
 std::ostream &operator<<(std::ostream &os, TypedArray<ElementType> &array)
@@ -183,6 +203,22 @@ std::ostream &operator<<(std::ostream &os, TypedArray<ElementType> &array)
     os << ']';
     return os;
 }
+
+template <typename ElementType>
+TypedArray<ElementType> TypedArray<ElementType>::reverse() {
+    assert(buffer != NULL);
+    int start = offset_to_index(origin);
+    int last = offset_to_index(end); 
+    while (start < last) { 
+        ElementType temp = this->get(start);
+        this->set(start, this->get(last - 1));
+        this->set(size() - start - 1, temp); 
+        start++; 
+        last--; 
+    }  
+    return *this;
+}
+
 
 // Private methods
 
