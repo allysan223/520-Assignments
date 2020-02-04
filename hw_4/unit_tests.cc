@@ -175,7 +175,7 @@ namespace {
         EXPECT_EQ(a.size(), 2);
     }
 
-    TEST(TypedArray, Reverse) {
+    TEST(TypedArray, Reverses) {
         TypedArray<Point> b;
         b.push(Point(1,2,3));
         b.push(Point(2,3,4));
@@ -184,6 +184,22 @@ namespace {
         EXPECT_EQ(b.get(0).x, 6);
         EXPECT_EQ(b.get(2).z, 3);
         EXPECT_EQ(b.size(), 3);
+
+        b = b.reverse().reverse();
+        EXPECT_EQ(b.get(0).x, 6);
+        EXPECT_EQ(b.get(2).z, 3);
+        EXPECT_EQ(b.size(), 3);
+
+        TypedArray<Point> c;
+        c.push(Point(1,2,3));
+        c.push(Point(2,3,4));
+        c.push(Point(6,7,8));
+        c.push(Point(10,5,9));
+        c = c.reverse();
+        EXPECT_EQ(c.get(0).x, 10);
+        EXPECT_EQ(c.get(2).z, 4);
+        EXPECT_EQ(c.get(1).y, 7);
+        EXPECT_EQ(c.size(), 4);
 
     }
 
