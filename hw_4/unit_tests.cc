@@ -244,8 +244,6 @@ namespace {
             }
         }
 
-        std::cout << m << "\n"; 
-
         for (int i=0; i<3; i++) {
             for (int j=0; j<3; j++) {
                 EXPECT_DOUBLE_EQ(m.get(i).get(j),3*i+j);

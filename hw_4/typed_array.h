@@ -11,13 +11,14 @@ class TypedArray {
 public:
 
     TypedArray();
+
      // Copy constructor
     TypedArray(const TypedArray& other);
 
     // Assignment operator
     TypedArray& operator=(const TypedArray& other);
 
-    TypedArray operator+(const TypedArray& other) const;
+    TypedArray operator+(const TypedArray& other);
 
     // Destructor
     ~TypedArray();
@@ -90,20 +91,8 @@ TypedArray<ElementType>& TypedArray<ElementType>::operator=(const TypedArray<Ele
 
 // Assignment operator: i.e TypedArray b + a 
 template <typename ElementType>
-TypedArray<ElementType> TypedArray<ElementType>::operator+(const TypedArray<ElementType>& other) const {
-    int i;
-    assert(buffer != NULL);
-    assert(other.buffer != NULL);
-    TypedArray<ElementType> newArrays;
-    //add values from second array
-    for ( i=0; i < size(); i++ ) {
-        newArrays.push(safe_get(i));
-    }
-
-    for ( i=0; i < other.size(); i++ ) {
-        newArrays.push(other.safe_get(i));
-    }
-    return newArrays;
+TypedArray<ElementType> TypedArray<ElementType>::operator+(const TypedArray<ElementType>& other) {
+    return this->concat(other);
 }
 
 // Destructor
@@ -157,7 +146,7 @@ void TypedArray<ElementType>::set(int index, ElementType value) {
 
 template <typename ElementType>
 ElementType TypedArray<ElementType>::pop() {
-    if (size() == 0) {
+    if (size() <= 0) {
         throw std::range_error("Cannot pop from an empty array");
     }
     //std::cout << offset_to_index(end) << "\n";
@@ -169,7 +158,7 @@ ElementType TypedArray<ElementType>::pop() {
 
 template <typename ElementType>
 ElementType TypedArray<ElementType>::pop_front() {
-    if (size() == 0) {
+    if (size() <= 0) {
         throw std::range_error("Cannot pop from an empty array");
     }
     ElementType value = safe_get(offset_to_index(origin));
