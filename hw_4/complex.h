@@ -6,21 +6,21 @@
 class Complex {
     public:
     Complex(double x, double y){
-        re = x, im = y;
+        real = x, imag = y;
     };
     Complex(double a) {
-        re = a;
-        im = 0;
+        real = a;
+        imag = 0;
     };
 
     double magnitude() const;
-    double real() const;
-    double imag() const;
+    double re() const;
+    double im() const;
 
     Complex conjugate() const;
 
     private:
-    double re, im;
+    double real, imag;
 }; 
 
 bool operator<(const Complex& a, const Complex& b);

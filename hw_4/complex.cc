@@ -3,20 +3,20 @@
 
 double Complex::magnitude() const {
 
-    return sqrt(re*re + im*im);
+    return sqrt(real*real + imag*imag);
 
 }
 
-double Complex::real() const {
-    return re;
+double Complex::re() const {
+    return real;
 }
 
-double Complex::imag() const {
-    return im;
+double Complex::im() const {
+    return imag;
 }
 
 Complex Complex::conjugate() const {
-    return Complex(re, -im);
+    return Complex(real, -imag);
 }
 
 bool operator<(const Complex& a, const Complex& b) {
@@ -26,21 +26,21 @@ bool operator<(const Complex& a, const Complex& b) {
 }
 
 bool operator==(const Complex& a, const Complex& b) {
-    return (a.real() == b.real()) && (a.imag() == b.imag());
+    return (a.re() == b.re()) && (a.im() == b.im());
 }
 
 Complex operator*(const Complex& a, const Complex& b) {
-    double realPart = a.real() * b.real() - a.imag() * b.imag();
-    double imagPart = a.real() * b.imag() + a.imag() * b.real();
-  return Complex (realPart, imagPart);
+    double rePart = a.re() * b.re() - a.im() * b.im();
+    double imPart = a.re() * b.im() + a.im() * b.re();
+  return Complex (rePart, imPart);
 }
 
 Complex operator+(const Complex& a, const Complex& b) {
-    double realPart = a.real() + b.real();
-    double imagPart = a.imag() + b.imag();
-  return Complex (realPart, imagPart);
+    double rePart = a.re() + b.re();
+    double imPart = a.im() + b.im();
+  return Complex (rePart, imPart);
 }
 
 // double Complex::re() {
-//      return this->real;
+//      return this->re;
 // }

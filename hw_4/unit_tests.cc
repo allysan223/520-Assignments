@@ -28,43 +28,43 @@ namespace {
         EXPECT_EQ(compare(Complex(5,4), Complex(-3,4)), 1);
     }
 
-    TEST(Complex,re_imag) {
+    TEST(Complex,re_im) {
         Complex x(1,2), y(3);
-        EXPECT_EQ(x.real(), 1);
-        EXPECT_EQ(x.imag(), 2);
+        EXPECT_EQ(x.re(), 1);
+        EXPECT_EQ(x.im(), 2);
     }
 
     TEST(Complex,conjugate) {
         Complex x(1,2), y(3);
         y = x.conjugate();
-        EXPECT_EQ(x.real(), 1);
-        EXPECT_EQ(x.imag(), 2);
-        EXPECT_EQ(y.real(), 1);
-        EXPECT_EQ(y.imag(), -2);
+        EXPECT_EQ(x.re(), 1);
+        EXPECT_EQ(x.im(), 2);
+        EXPECT_EQ(y.re(), 1);
+        EXPECT_EQ(y.im(), -2);
 
         Complex z(2,5);
         z.conjugate();
-        EXPECT_EQ(z.real(), 2);
-        EXPECT_EQ(z.imag(), 5);
-        EXPECT_EQ(z.conjugate().imag(), -5);
+        EXPECT_EQ(z.re(), 2);
+        EXPECT_EQ(z.im(), 5);
+        EXPECT_EQ(z.conjugate().im(), -5);
     }
 
     TEST(Complex,math) {
         Complex x(4,-3), y(2,5);
         Complex z = y * x;
         Complex z1 = x + y;
-        EXPECT_EQ(z.real(),23);
-        EXPECT_EQ(z.imag(),14);
-        EXPECT_EQ(z1.real(),6);
-        EXPECT_EQ(z1.imag(),2);
+        EXPECT_EQ(z.re(),23);
+        EXPECT_EQ(z.im(),14);
+        EXPECT_EQ(z1.re(),6);
+        EXPECT_EQ(z1.im(),2);
 
         Complex a(0, 2), b(-3,0);
         Complex c = a * b;
-        EXPECT_EQ(c.real(),0);
-        EXPECT_EQ(c.imag(),-6);
+        EXPECT_EQ(c.re(),0);
+        EXPECT_EQ(c.im(),-6);
         c = a + b + b;
-        EXPECT_EQ(c.real(),-6);
-        EXPECT_EQ(c.imag(),2);
+        EXPECT_EQ(c.re(),-6);
+        EXPECT_EQ(c.im(),2);
     }
 
     TEST(Complex,equals) {
