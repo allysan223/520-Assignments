@@ -1,6 +1,7 @@
 #include <exception>
 #include "examples.h"
 #include <cstring>
+#include <iostream>
 
 using namespace std;
 
@@ -19,17 +20,16 @@ void sort_by_magnitude(vector<double> &v){
 vector<int> primes(int n) {
     vector<int> v;
     bool prime[n+1]; 
+
+    // initalizes an array of booleans
     memset(prime, true, sizeof(prime)); 
   
-    for (int p=2; p*p<=n; p++) 
+    for (int p = 2; p*p<=n; p++) 
     { 
-        // If prime[p] is not changed, then it is a prime 
+        // Checks if prime[p] is still true
         if (prime[p] == true) 
         { 
-            // Update all multiples of p greater than or  
-            // equal to the square of it 
-            // numbers which are multiple of p and are 
-            // less than p^2 are already been marked.  
+            //update to false since it is a multiple 
             for (int i=p*p; i<=n; i += p) 
                 prime[i] = false; 
         } 
@@ -40,5 +40,17 @@ vector<int> primes(int n) {
           v.push_back(p);
 
     return v;
+}
+
+vector<tuple<int,int>> twins(vector<int> nums){
+    vector<tuple<int,int>> pairs;
+    sort(nums.begin(),nums.end());
+    for (int i =0; i < nums.size()-1; i++){
+        //cout << "nums: " << nums[i] << ", " << nums[i+1] << "\n";
+        if (abs(nums[i+1]) - abs(nums[i]) == 2)
+            pairs.push_back( make_tuple(nums[i], nums [i+1]));
+    }
+    
+    return pairs;
 }
 

@@ -201,5 +201,23 @@ namespace {
       ASSERT_EQ(primes(29), v);
       ASSERT_EQ(primes(30), v);
   }
+
+  TEST(Examples,twins) {
+      vector<int> v = { 2,3,5,7,11,13,17,23};
+      vector<tuple<int,int>> tups;
+      tups.push_back(make_tuple(3,5));
+      tups.push_back(make_tuple(5,7));
+      tups.push_back(make_tuple(11,13));
+      ASSERT_EQ(twins(v), tups);
+  }
+
+  TEST(Examples,prime_twins) {
+      vector<int> v = primes(1000);
+      auto twinPrimes = twins(v);
+      for (int i =0; i < twinPrimes.size()-1; i++){
+        cout << get<0>(twinPrimes[i]) << ", " << get<1>(twinPrimes[i]) <<"\n";
+      }
+  }
+
 }
 

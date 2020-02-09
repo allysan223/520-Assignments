@@ -13,4 +13,6 @@ void sort_by_magnitude(vector<double> &v);
 
 vector<int> primes(int n);
 
+vector<tuple<int,int>> twins(vector<int> nums);
+
 #endif
