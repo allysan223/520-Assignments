@@ -44,6 +44,16 @@ DB::Row DB::find(int key) const {
 
 }
 
+DB::Row DB::find_by_name(const string name) const {
+    auto rows = where([name](DB::Row row) { return  NAME(row) == name; }); 
+
+    if (rows.size() == 0 )
+        throw runtime_error("Could not find row by name");
+
+    return rows[0];
+
+}
+
 vector<DB::Row> DB::where(function<bool(const DB::Row)> f) const {
 
     vector<Row> rows;

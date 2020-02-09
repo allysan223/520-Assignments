@@ -26,6 +26,7 @@ class DB {
     DB &drop(int);
     Row find(int) const;
     vector<Row> where(function<bool(const Row)> f) const;
+    Row find_by_name(const string) const;
 
   private:
 

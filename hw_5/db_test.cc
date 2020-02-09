@@ -32,7 +32,17 @@ namespace {
             FAIL();
         } catch ( runtime_error e ) {
             ASSERT_STREQ(e.what(), "Name already exists");
-        }   
+        } 
+
+        try {
+            db.find_by_name("pluto");                        
+            FAIL();
+        } catch ( runtime_error e ) {
+            ASSERT_STREQ(e.what(), "Could not find row by name");
+        }
+
+        ASSERT_EQ(NAME(db.find_by_name("earth")), "earth"); 
+        ASSERT_EQ(NAME(db.find_by_name("jupiter")), "jupiter");    
 
     }
 
