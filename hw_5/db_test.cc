@@ -25,7 +25,14 @@ namespace {
             FAIL();
         } catch ( runtime_error e ) {
             ASSERT_STREQ(e.what(), "Could not find an entry with the given key");
-        }     
+        }
+
+        try {
+            db.insert("earth", 10, 71);                        
+            FAIL();
+        } catch ( runtime_error e ) {
+            ASSERT_STREQ(e.what(), "Name already exists");
+        }   
 
     }
 

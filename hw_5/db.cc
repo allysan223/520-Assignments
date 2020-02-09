@@ -7,6 +7,9 @@ DB::DB() : _next_key(0) {}
 
 
 DB &DB::insert(const string name, double mass, double distance) {
+    auto rows = where([name](DB::Row row) { return  NAME(row) == name; }); 
+        if (rows.size() > 0 )
+            throw runtime_error("Name already exists");
 
     int key = _next_key++;
     _data[key] = make_tuple(name, mass, distance);
