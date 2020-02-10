@@ -4,7 +4,10 @@
 
 using namespace std;
 
-DB::DB() : _next_key(0) {}
+DB::DB() {
+    _next_key =0;
+    totalSize =0;
+}
 
 
 DB &DB::insert(const string name, double mass, double distance) {
@@ -14,6 +17,9 @@ DB &DB::insert(const string name, double mass, double distance) {
 
     int key = _next_key++;
     _data[key] = make_tuple(name, mass, distance);
+
+    totalSize++;
+
     return *this;
 
 }
@@ -49,7 +55,7 @@ DB &DB::drop(int key) {
     if ( e != _data.end() ) {
         _data.erase (e);
     }
-
+    totalSize--;
     return *this;
 }
 
@@ -94,3 +100,25 @@ vector<DB::Row> DB::where(function<bool(const DB::Row)> f) const {
 
 }
 
+double DB::accumulate(function<double(const DB::Row)> f) const {
+    double sum = 0;
+
+    for( auto [key, value] : _data ) {
+        auto row = to_row(key,value);
+        sum += f(row) ;
+    }
+    return sum;
+}
+
+int DB::size() const{
+    return totalSize;
+}
+
+double DB::average_mass() const {
+    double sum = accumulate([](DB::Row row) { return MASS(row); });
+    return sum / (double)size();
+}
+double DB::average_distance() const{
+    double sum = accumulate([](DB::Row row) { return DISTANCE(row); });
+    return sum / (double)size();
+}

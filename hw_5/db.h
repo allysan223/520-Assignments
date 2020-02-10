@@ -25,9 +25,17 @@ class DB {
     DB &insert(const string, double, double);
     DB &drop(int);
     DB &create_test_data(int n);
+
     Row find(int) const;
-    vector<Row> where(function<bool(const Row)> f) const;
     Row find_by_name(const string) const;
+
+    vector<Row> where(function<bool(const Row)> f) const;
+    double accumulate(function<double(const Row)> f) const;
+    int size() const;
+
+    double average_mass() const;
+    double average_distance() const;
+    
 
   private:
 
@@ -35,6 +43,7 @@ class DB {
     Row to_row(int,const Value) const;
     map<int,Value> _data;
     int _next_key;
+    int totalSize;
 
 };
 
