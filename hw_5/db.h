@@ -24,6 +24,7 @@ class DB {
     DB();
     DB &insert(const string, double, double);
     DB &drop(int);
+    DB &create_test_data(int n);
     Row find(int) const;
     vector<Row> where(function<bool(const Row)> f) const;
     Row find_by_name(const string) const;

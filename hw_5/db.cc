@@ -1,5 +1,6 @@
 #include <exception>
 #include "db.h"
+#include <iostream>
 
 using namespace std;
 
@@ -15,6 +16,30 @@ DB &DB::insert(const string name, double mass, double distance) {
     _data[key] = make_tuple(name, mass, distance);
     return *this;
 
+}
+
+DB &DB::create_test_data(int n) {
+    string name = "";
+    double mass, distance;
+    double massMin = 0.01;
+    double massMax = 1000; 
+    double distanceMin = 0.1;
+    double distanceMax = 10000000;
+
+    for ( int i = 0; i < n; i++){
+        try{
+            name = "exoplanet" + to_string(_next_key);
+            mass = (massMax - massMin) * ( (double)rand() / (double)RAND_MAX ) + massMin;
+            distance = (distanceMax - distanceMin) * ( (double)rand() / (double)RAND_MAX ) + distanceMin;
+            insert(name, mass, distance);
+            cout << name << ", mass: " << mass << ", distance: " << distance << "\n";
+        } catch (const std::runtime_error& e) {
+            // this executes if try throws std::runtime_error 
+            i--;
+        }
+        
+    }
+    return *this;
 }
 
 DB &DB::drop(int key) {

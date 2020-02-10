@@ -42,7 +42,11 @@ namespace {
         }
 
         ASSERT_EQ(NAME(db.find_by_name("earth")), "earth"); 
-        ASSERT_EQ(NAME(db.find_by_name("jupiter")), "jupiter");    
+        ASSERT_EQ(NAME(db.find_by_name("jupiter")), "jupiter");   
+
+        db.create_test_data(100); 
+
+        ASSERT_EQ(NAME(db.find_by_name("exoplanet40")), "exoplanet40"); 
 
     }
 
