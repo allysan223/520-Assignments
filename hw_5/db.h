@@ -14,6 +14,9 @@ using namespace std;
 #define MASS get<2>
 #define DISTANCE get<3>
 
+void gen_random(char *s, const int len);
+
+
 class DB {
 
   public:

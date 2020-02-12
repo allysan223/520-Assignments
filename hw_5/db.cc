@@ -1,6 +1,7 @@
 #include <exception>
 #include "db.h"
 #include <iostream>
+#include <random>
 
 using namespace std;
 
@@ -34,13 +35,19 @@ DB &DB::create_test_data(int n) {
 
     for ( int i = 0; i < n; i++){
         try{
-            name = "exoplanet" + to_string(_next_key);
+            //generate name composed of random characters (lower case) *per TA
+            int len = 15;
+            char* name = (char*)malloc(sizeof(char) * len);
+            gen_random(name, len);
+            //name = "exoplanet" + to_string(_next_key);
+
+            //generate random mass & distance
             mass = (massMax - massMin) * ( (double)rand() / (double)RAND_MAX ) + massMin;
             distance = (distanceMax - distanceMin) * ( (double)rand() / (double)RAND_MAX ) + distanceMin;
             insert(name, mass, distance);
             cout << name << ", mass: " << mass << ", distance: " << distance << "\n";
         } catch (const std::runtime_error& e) {
-            // this executes if try throws std::runtime_error 
+            // try again if try throws std::runtime_error (i.e: duplicate name)
             i--;
         }
         
@@ -121,4 +128,16 @@ double DB::average_mass() const {
 double DB::average_distance() const{
     double sum = accumulate([](DB::Row row) { return DISTANCE(row); });
     return sum / (double)size();
+}
+
+void gen_random(char *s, const int len) {
+
+    static const char alphanum[] =
+        "abcdefghijklmnopqrstuvwxyz";
+
+    for (int i = 0; i < len; ++i) {
+        s[i] = alphanum[rand() % (sizeof(alphanum) - 1)];
+    }
+
+    s[len] = 0;
 }
