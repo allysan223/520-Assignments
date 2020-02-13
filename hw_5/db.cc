@@ -132,11 +132,11 @@ double DB::average_distance() const{
 
 void gen_random(char *s, const int len) {
 
-    static const char alphanum[] =
+    static const char rand_letter[] =
         "abcdefghijklmnopqrstuvwxyz";
 
     for (int i = 0; i < len; ++i) {
-        s[i] = alphanum[rand() % (sizeof(alphanum) - 1)];
+        s[i] = rand_letter[rand() % (sizeof(rand_letter) - 1)];
     }
 
     s[len] = 0;
