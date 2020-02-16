@@ -1,6 +1,10 @@
 #include "gtest/gtest.h"
 #include "elma/elma.h"
 #include "stopwatch.h"
+#include "random_process.h"
+#include "filter.h"
+#include "integrator.h"
+//#include <channel.h>
 #include <iostream>
 
 #define SLEEP std::this_thread::sleep_for(std::chrono::milliseconds(10))
@@ -56,19 +60,55 @@ namespace {
     // }
 
     TEST(Stopwatch,count) {
-
       Stopwatch s;
       s.start();
       SLEEP;
       SLEEP;
       s.stop();   
-      s.get_nanoseconds();
+      s.get_milliseconds();
       s.start();
       SLEEP;
       s.stop();
-      s.get_nanoseconds();
+      s.get_milliseconds();
+      s.reset();
+      SLEEP;
+      s.start();
+      SLEEP;
+      s.stop();
+      s.get_milliseconds();
+    }
 
+    TEST(Elma,RandomProcess) {
 
+      elma::Manager m;
+
+      RandomProcess r("random numbers");
+      Filter f("filter");
+      Channel link("link");
+
+      m.schedule(r, 1_ms)
+       .schedule(f, 1_ms)
+      .add_channel(link)
+      .init()
+      .run(30_ms);
+
+      cout << "filtered average: " << f.value() << "\n";
+    }
+
+    TEST(Elma,Integrator) {
+
+      elma::Manager m;
+
+      RandomProcess r("random numbers");
+      Integrator i("integrator");
+      Channel link("link");
+      m.schedule(r, 1_ms)
+       .schedule(i, 1_ms)
+      .add_channel(link)
+      .init()
+      .run(30_ms);
+
+      cout << "integrated value: " << i.value() << "\n";
     }
 
 }
