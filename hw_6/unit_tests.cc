@@ -4,6 +4,7 @@
 #include "random_process.h"
 #include "filter.h"
 #include "integrator.h"
+#include "derivative.h"
 //#include <channel.h>
 #include <iostream>
 
@@ -109,6 +110,22 @@ namespace {
       .run(30_ms);
 
       cout << "integrated value: " << i.value() << "\n";
+    }
+
+    TEST(Elma,Derivative) {
+
+      elma::Manager m;
+
+      RandomProcess r("random numbers");
+      Derivative d("derivative");
+      Channel link("link");
+      m.schedule(r, 1_ms)
+       .schedule(d, 1_ms)
+      .add_channel(link)
+      .init()
+      .run(30_ms);
+
+      cout << "derived value: " << d.value() << "\n";
     }
 
 }
