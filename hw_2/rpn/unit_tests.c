@@ -32,9 +32,15 @@ namespace {
         rpn_free();
 
         rpn_init();
-        for (int i = 0; i < 205; i++){
-            rpn_push(1.0);
+        int i;
+        for (i = 0; i < 505; i++){
+            rpn_push(i);
         }
+        for (i = 0; i < 505; i++){
+            //std::cout << "popped val: " << rpn_pop() << "\n";
+            ASSERT_EQ(rpn_pop(),504-i);
+        }
+
         ASSERT_EQ(rpn_error(), OK);
         rpn_free();
     }
