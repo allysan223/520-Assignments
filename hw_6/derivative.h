@@ -32,8 +32,8 @@ namespace {
             x_k = (channel("link").latest());
             //( x(k) - x(k-1) ) / delta()
             derivedVal = (x_k - x_kPrev) / delta();
-            //cout << "delta: " << delta() << ", current num: " << x_k << ", prev num: " << x_kPrev;
-            //cout << ", derived value: " << derivedVal << "\n";
+            cout << "delta: " << delta() << ", current num: " << x_k << ", prev num: " << x_kPrev;
+            cout << ", derived value: " << value() << "\n";
 
             iterVal++;
 
@@ -42,13 +42,16 @@ namespace {
         void stop() {}
 
         double value() {
-            return derivedVal;
+            if (iterVal > 0)
+                return derivedVal;
+            //else
+            return 0;
         }
 
         private:
         double x_k; //stores value from "link" channel (current value)
         double x_kPrev; //stores value from "link" channel (previous value)
-        int iterVal;
+        int iterVal; //counter to check if process has read atleast 2 values
         double derivedVal; //stores integrated value
 
     };  

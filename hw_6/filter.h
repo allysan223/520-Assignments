@@ -28,7 +28,7 @@ namespace {
         void update() {
             total = 0;
             
-            cout << "filter - update \n" ;
+            //cout << "filter - update \n" ;
             if (channel("link").empty()){
                 //cout << "filter - channel link empty \n" ;
                 total = 0;

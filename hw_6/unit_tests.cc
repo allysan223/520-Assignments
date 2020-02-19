@@ -129,7 +129,7 @@ namespace {
        .schedule(i, 1_ms)
       .add_channel(link)
       .init()
-      .run(30_ms);
+      .run(15_ms);
 
       cout << "integrated value: " << i.value() << "\n";
     }
