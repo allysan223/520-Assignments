@@ -30,11 +30,11 @@ namespace {
             
             cout << "filter - update \n" ;
             if (channel("link").empty()){
-                cout << "filter - channel link empty \n" ;
+                //cout << "filter - channel link empty \n" ;
                 total = 0;
                 return; 
             }
-            cout << "filter - not empty" << ", size: " << channel("link").size() << " \n" ;
+            //cout << "filter - not empty" << ", size: " << channel("link").size() << " \n" ;
             buffer[index] = (channel("link").latest());
             
             //stop count at 10 (denominator for calculating average)
@@ -48,11 +48,11 @@ namespace {
             }
 
             for (int i = 0; i< buffer.size(); i++){
-                cout << "buffer, index: " << i << ", value: " << buffer[i] << "\n";
+                //cout << "buffer, index: " << i << ", value: " << buffer[i] << "\n";
                 total += buffer[i];
             } 
 
-            cout << "count: " << totalIter << ", total: " << total << ", average: " << value() << "\n";
+            //cout << "count: " << totalIter << ", total: " << total << ", average: " << value() << "\n";
         }
 
         void stop() {}

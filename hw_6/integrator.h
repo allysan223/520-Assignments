@@ -28,7 +28,7 @@ namespace {
             // }
             v = (channel("link").latest());
             integratedVal += v * delta();
-            cout << "delta: " << delta() << ", latest num: " << v << "\n";
+            //cout << "delta: " << delta() << ", latest num: " << v << "\n";
 
         }
 

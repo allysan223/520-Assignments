@@ -20,6 +20,7 @@ private:
     high_resolution_clock::time_point t_start;
     high_resolution_clock::time_point t_stop;
     duration<double> stopwatch_span;
+    bool stopFlag;
 
 
 public:
@@ -37,6 +38,7 @@ public:
 Stopwatch::Stopwatch(/* args */)
 {
     reset();
+    stopFlag = false;
 }
 
 Stopwatch::~Stopwatch()
@@ -45,11 +47,13 @@ Stopwatch::~Stopwatch()
 
 // starts the timer
 void Stopwatch::start(){
+    stopFlag = false;
     t_start = high_resolution_clock::now();
 }
 
 // stops time
 void Stopwatch::stop(){
+    stopFlag = true;
     t_stop = high_resolution_clock::now();
 }
 
@@ -60,6 +64,8 @@ void Stopwatch::reset(){
 
 // get time in minutes
 double Stopwatch::get_minutes(){
+    if (!stopFlag) 
+        t_stop = high_resolution_clock::now();
     stopwatch_span = stopwatch_span + duration_cast<duration<double>>(t_stop - t_start);
     auto elapsed_mins = minutes_type(stopwatch_span);
     std::cout << "stopwatch:  " << elapsed_mins.count() << " minutes. \n";
@@ -69,6 +75,8 @@ double Stopwatch::get_minutes(){
 
 // get time in secs
 double Stopwatch::get_seconds(){
+    if (!stopFlag) 
+        t_stop = high_resolution_clock::now();
     stopwatch_span = stopwatch_span + duration_cast<duration<double>>(t_stop - t_start);
     std::cout << "stopwatch:  " << stopwatch_span.count() << " seconds. \n";
 
@@ -77,6 +85,8 @@ double Stopwatch::get_seconds(){
 
 // get time in milli
 double Stopwatch::get_milliseconds(){
+    if (!stopFlag) 
+        t_stop = high_resolution_clock::now();
     stopwatch_span = stopwatch_span + duration_cast<duration<double>>(t_stop - t_start);
     auto elapsed_milli = milliseconds_type(stopwatch_span);
     std::cout << "stopwatch:  " << elapsed_milli.count() << " milliseconds. \n";
@@ -86,6 +96,8 @@ double Stopwatch::get_milliseconds(){
 
 // get time in nano
 double Stopwatch::get_nanoseconds(){
+    if (!stopFlag) 
+        t_stop = high_resolution_clock::now();
     stopwatch_span = stopwatch_span + duration_cast<duration<double>>(t_stop - t_start);
     auto elapsed_nano = nanoseconds_type(stopwatch_span);
     std::cout << "stopwatch:  " << elapsed_nano.count() << " nanoseconds. \n";

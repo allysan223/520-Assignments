@@ -60,8 +60,30 @@ namespace {
     //     ASSERT_EQ(q.num_updates(), 2);      
     // }
 
+    TEST(Stopwatch,startMultiple) {
+      Stopwatch s;
+      s.start();
+      SLEEP;
+      SLEEP;
+      s.start(); 
+      SLEEP;
+      s.stop();  
+      s.get_milliseconds();
+    }
+
+    TEST(Stopwatch,noStop) {
+      Stopwatch s;
+      s.start();
+      SLEEP;
+      SLEEP;
+      s.start(); 
+      SLEEP;  
+      s.get_milliseconds();
+    }
+
     TEST(Stopwatch,count) {
       Stopwatch s;
+      Stopwatch m;
       s.start();
       SLEEP;
       SLEEP;

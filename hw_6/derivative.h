@@ -32,8 +32,8 @@ namespace {
             x_k = (channel("link").latest());
             //( x(k) - x(k-1) ) / delta()
             derivedVal = (x_k - x_kPrev) / delta();
-            cout << "delta: " << delta() << ", current num: " << x_k << ", prev num: " << x_kPrev;
-            cout << ", derived value: " << derivedVal << "\n";
+            //cout << "delta: " << delta() << ", current num: " << x_k << ", prev num: " << x_kPrev;
+            //cout << ", derived value: " << derivedVal << "\n";
 
             iterVal++;
 
