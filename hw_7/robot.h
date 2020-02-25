@@ -9,6 +9,7 @@ using namespace elma;
 class Mode : public State {
     public:
     Mode(std::string name) : State(name) {}
+    Mode() : State() {}
     void entry(const Event& e) {
         std::cout << "entering " + name() << "\n";
     }
@@ -16,83 +17,19 @@ class Mode : public State {
     void exit(const Event&) {}
 };
 
-class Wander : public State {
-    public:
-    Wander() : State("Wander") {}
-    void entry(const Event& e) {}
-    void during() {} 
-    void exit(const Event& e) {
-        if ( e.name() == "intruder detected" ) {
-            emit(Event("Make Noise"));
-        }
-        if ( e.name() == "battery low" ) {
-            emit(Event("Find Recharge Station"));
-        }      
-    }
-};
-
-class MakeNoise : public State {
-    public:
-    MakeNoise() : State("Make Noise") {}
-    void entry(const Event& e) {}
-    void during() {} 
-    void exit(const Event& e) {
-        if ( e.name() == "proximity warning" ) {
-            emit(Event("Evade"));
-        }
-        if ( e.name() == "reset" ) {
-            emit(Event("Wander"));
-        }
-    }
-};
-
-class Evade : public State {
-    public:
-    Evade() : State("Evade") {}
-    void entry(const Event& e) {}
-    void during() {} 
-    void exit(const Event& e) {
-        if ( e.name() == "reset" ) {
-            emit(Event("Make Noise"));
-        }
-        if ( e.name() == "battery low" ) {
-            emit(Event("Find Recharge Station"));
-        }
-    }
-};
-
-class FindRechargeStation : public State {
-    public:
-    FindRechargeStation() : State("Find Recharge Station") {}
-    void entry(const Event& e) {}
-    void during() {} 
-    void exit(const Event& e) {
-        if ( e.name() == "reset" ) {
-            emit(Event("Make Noise"));
-        }
-        if ( e.name() == "battery low" ) {
-            emit(Event("Find Recharge Station"));
-        }
-    }
-};
-
-class Recharge : public State {
-    public:
-    Recharge() : State("Recharge") {}
-    void entry(const Event& e) {}
-    void during() {} 
-    void exit(const Event& e) {
-        if ( e.name() == "battery full" ) {
-            emit(Event("Wander"));
-        }
-    }
-};
-
 class Robot : public StateMachine {
 
     public:
 
-    Robot(string name) : StateMachine() {
+    Robot(string name) : StateMachine(name) {
+        //initalize all states
+        wander = Mode("Wander"); 
+        make_noise =  Mode("Make Noise");
+        evade =  Mode("Evade");
+        find_recharge_station = Mode("Find Recharge Station");
+        recharge = Mode("Recharge");
+
+        //iniitalize all transistions
         set_initial(wander);
         add_transition("intruder detected", wander, make_noise);
         add_transition("reset", make_noise, wander);
@@ -105,15 +42,13 @@ class Robot : public StateMachine {
     }
 
     private:
-
-    Wander wander;
-    MakeNoise make_noise;
-    Evade evade;
-    FindRechargeStation find_recharge_station;
-    Recharge recharge;      
+    Mode wander;
+    Mode make_noise;
+    Mode evade;
+    Mode find_recharge_station;
+    Mode recharge;    
 
 };
-
 
 
 #endif

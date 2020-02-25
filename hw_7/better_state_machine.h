@@ -28,13 +28,10 @@ class BetterStateMachine : public StateMachine {
         //gather wanted data
         for (int i = 0; i < size; i ++){
             events.push_back(_transitions[i].event_name());
-            cout << i << ": " << events[i] << "\n";
             to.push_back(_transitions[i].to().name());
             states.push_back(_transitions[i].to().name());
-            cout << i << ": " << to[i] << "\n";
             from.push_back(_transitions[i].from().name());
             states.push_back(_transitions[i].from().name());
-            cout << i << ": " << from[i] << "\n";
             j["transitions"][i]["from"] = from[i];
             j["transitions"][i]["to"] = to[i];
             j["transitions"][i]["when"] = events[i];
