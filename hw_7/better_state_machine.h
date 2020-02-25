@@ -41,6 +41,7 @@ class BetterStateMachine : public StateMachine {
         sort( states.begin(), states.end() );
         states.erase( unique( states.begin(), states.end() ), states.end() );
         j["states"] = states;
+        j["initial"] = _initial->name();
         //j["transitions"] = 
 
         return j;
