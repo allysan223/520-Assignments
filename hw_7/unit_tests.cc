@@ -9,6 +9,18 @@
 using namespace std::chrono;
 using namespace elma;
 
+class Trigger : public Process {
+    public:
+    Trigger() : Process("trigger") {}
+    void init() {}
+    void start() {}
+    void update() { 
+        std::cout << "switch at " << milli_time() << "\n";
+        emit(Event("switch"));
+    }
+    void stop() {}
+};
+
 namespace {
    
     TEST(Microwave, Safety) {
@@ -56,9 +68,27 @@ namespace {
     }
 
     TEST(BetterStateMachine, Basics) {
+        Manager m;
+        Trigger trigger;
+        Mode off("off"), on("on");
+        BetterStateMachine fsm("toggle switch");
 
-        BetterStateMachine fsm("toggle switch");  
-        fsm.to_json();
+        fsm.set_initial(off)
+        .set_propagate(false)
+        .add_transition("switch", off, on)
+        .add_transition("switch", on, off);
+
+        // m.schedule(trigger, 1_ms)
+        // .schedule(fsm, 5_ms) // Doesn't matter since mode has empty update()
+        // .init()
+        // .run(11_ms);
+ 
+        json j = fsm.to_json();
+        std::cout << j.dump(4) << std::endl;
+
+        ASSERT_EQ(j["name"], "toggle switch");
+        ASSERT_EQ(j["states"].size(), 2);
+
 
         // ETC
 
