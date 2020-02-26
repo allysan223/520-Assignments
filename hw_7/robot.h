@@ -6,6 +6,7 @@
 
 using namespace elma;
 
+//Class for defining modes (states)
 class Mode : public State {
     public:
     Mode(std::string name) : State(name) {}

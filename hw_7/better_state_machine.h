@@ -12,7 +12,7 @@ using namespace std;
 
 using namespace elma;
 
-//! A finite state machine class
+//! A finite state machine class adds JSON function
 
 class BetterStateMachine : public StateMachine { 
 
@@ -38,8 +38,8 @@ class BetterStateMachine : public StateMachine {
         }
         j["name"] = name();
         //remove dups in states
-        sort( states.begin(), states.end() );
-        states.erase( unique( states.begin(), states.end() ), states.end() );
+        sort(states.begin(), states.end());
+        states.erase( unique(states.begin(), states.end()), states.end());
         j["states"] = states;
         j["initial"] = _initial->name();
         //j["transitions"] = 
