@@ -4,22 +4,13 @@
     "ip": "0.0.0.0",
     "port": 8765,
 
-    "agents": [
-        {
-            "definition": "defs/wanderer.json",
-            "style": { "fill": "lightgreen", "stroke": "black" },
-            "position": {
-                "x": -50, 
-                "y": 0, 
-                "theta": 0
-            }
-        },   
+    "agents": [  
         {
             "definition": "defs/wanderer.json",
             "style": { "fill": "lightgreen", "stroke": "black" },
             "position": {
                 "x": -350, 
-                "y": 180, 
+                "y": 170, 
                 "theta": 0
             }
         }                                      
@@ -33,8 +24,8 @@
             "style": { "fill": "gray", "stroke": "none" },
             "shape": [
                 { "x": -350, "y": -200 },
-                { "x": -350,  "y": 160 },
-                { "x": -340,  "y": 160 },
+                { "x": -350,  "y": 150 },
+                { "x": -340,  "y": 150 },
                 { "x": -340, "y": -200 }
             ]
         },
@@ -46,6 +37,16 @@
                 { "x": 350,  "y": 200 },
                 { "x": 340,  "y": 200 },
                 { "x": 340, "y": -200 }
+            ]
+        },
+        {
+            "_comment": "Inner Wall: Right",
+            "style": { "fill": "gray", "stroke": "none" },
+            "shape": [
+                { "x": 300, "y": -150 },
+                { "x": 300,  "y": 150 },
+                { "x": 290,  "y": 150 },
+                { "x": 290, "y": -150 }
             ]
         },
         {
@@ -72,28 +73,20 @@
             "_comment": "inside wall: horizontal start",
             "style": { "fill": "gray", "stroke": "none" },
             "shape": [
-                { "x": -350, "y": 150 },
-                { "x": 300,  "y": 150 },
+                { "x": -350, "y": 140 },
                 { "x": 300,  "y": 140 },
-                { "x": -350, "y": 140 }
+                { "x": 300,  "y": 150 },
+                { "x": -350, "y": 150 }
             ]
         },
         {
+            "_comment": "inside wall: horizontal top",
             "style": { "fill": "gray", "stroke": "none" },
             "shape": [
-                { "x": -70, "y": -200 },
-                { "x": -80,  "y": -200 },
-                { "x": -80,  "y": -50 },
-                { "x": -70, "y": -50 }
-            ]
-        },
-        {
-            "style": { "fill": "gray", "stroke": "none" },
-            "shape": [
-                { "x": 70, "y": -200 },
-                { "x": 80,  "y": -200 },
-                { "x": 80,  "y": -50 },
-                { "x": 70, "y": -50 }
+                { "x": -300, "y": -140 },
+                { "x": 300,  "y": -140 },
+                { "x": 300,  "y": -150 },
+                { "x": -300, "y": -150 }
             ]
         }      
 
