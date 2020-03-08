@@ -18,30 +18,42 @@ namespace {
         public:
         void entry(const Event& e) {
             std::cout << "MOVING FORWARD.. "<< "\n";
-            track_velocity(7,0);
+            if ( sensor_value(0) < 150){
+                speed = 2;
+                std::cout << " GO SLOWWWW \n";
+            } else {
+                speed = 10;
+            }
+            track_velocity(speed,0);
         }
         void during() { 
-            //track_velocity(5,0);
+            if ( sensor_value(0) < 100){
+                speed = 2;
+            }
+
             if ( sensor_value(0) < 10  && sensor_value(2) > 15) { //turn left 90
                 std::cout << "FRONT SENSOR LESS THAN 10, sensor 0: "<< sensor_value(0) << ", sensor value 2: " << sensor_value(2) << "\n";
                 emit(Event("turn_left"));
             } else if (sensor_value(0) < 10) {
                 emit(Event("turn_right"));
             }
+
             if ( angle() > targetAngle ) { //turn right little
                 std::cout << "MOVING FORWARD, straighten to right "<< "\n";
-                track_velocity(5,-0.05);
+                track_velocity(speed,-0.05);
                 //emit(Event("tick_name_straight"));
             }
+
             if ( angle() < targetAngle) { //turn left little
                 std::cout << "MOVING FORWARD, straighten to left "<< "\n";
-                track_velocity(5,0.05);
+                track_velocity(speed,0.05);
                 //emit(Event("tick_name_straight"));
             }
       
         }
         void exit(const Event& e) {}
         void set_tick_name(std::string s) { tick_name = s; }
+        double speed;
         std::string tick_name;
     };
 
@@ -54,40 +66,38 @@ namespace {
             startAngle = angle();
             step = 0;
             //targetAngle = startAngle - M_PI/2;
-            targetAngle = event == "turn_right" ? startAngle + M_PI/2 : startAngle - M_PI/2;
+            //targetAngle = event == "turn_right" ? startAngle + M_PI/2 : startAngle - M_PI/2;
+            targetAngle = event == "turn_right" ? targetAngle + M_PI/2 : targetAngle - M_PI/2;
         } //{ rate = rand() % 2 == 0 ? 2 : -2; }
         void during() {
             //back up if too close to wall while turning
             if (step == 0 ){
                 track_velocity(-.5,0);
                 //turn robot ccw
-                if ( sensor_value(0) >= 10 ) {
+                if ( sensor_value(0) >= 11.5 ) {
                     step = 1;
                 //emit(Event(tick_name));
                  }
             }
             if (step == 1){
-                event == "turn_right" ? track_velocity(.05,0.3) : track_velocity(.05,-0.3);
+                event == "turn_right" ? track_velocity(.05,1) : track_velocity(.05,-1);
                 
                 //turn robot ccw
-                if (event == "turn_left" && angle() <= targetAngle ) {
-                    step = 2;
-                //emit(Event(tick_name));
-                 } else if (event == "turn_right" && angle() >= targetAngle ){
+                if (event == "turn_left" && angle() <= targetAngle || event == "turn_right" && angle() >= targetAngle){
                      step = 2;
                  }
             }
             if ( step == 2 ) {
                 //track_velocity(.05,0.05);
-                event == "turn_right" ? track_velocity(.05,-0.05) : track_velocity(.05,0.05);
-                if (event == "turn_left" && angle() >= targetAngle ){
-                    //emit(Event("turn_left"));
-                    event == "turn_right" ? emit(Event("turn_right")) : emit(Event("turn_left"));
-                } else if (event == "turn_right" && angle() <= targetAngle ){
-                    //emit(Event("turn_left"));
+                event == "turn_right" ? track_velocity(.05,-0.1) : track_velocity(.05,0.1);
+                condition = event == "turn_left" && angle() >= targetAngle || event == "turn_right" && angle() <= targetAngle;
+                if (condition){
+                    //turn again if still facing wall
+                    if (sensor_value(0) < 10){
+                        event == "turn_right" ? emit(Event("turn_right")) : emit(Event("turn_left"));
+                    }
                     event == "turn_right" ? emit(Event("turn_right")) : emit(Event("turn_left"));
                 }
-                
             }
 
             angleVal = angle();
@@ -96,7 +106,7 @@ namespace {
         }
         void exit(const Event& e) {}
         double rate, angleVal, startAngle;
-        bool turningL, turningR;
+        bool condition;
         std::string event;
         int step;
         void set_tick_name(std::string s) { tick_name = s; }
