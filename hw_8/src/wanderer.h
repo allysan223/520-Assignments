@@ -18,7 +18,7 @@ namespace {
         public:
         void entry(const Event& e) {
             std::cout << "MOVING FORWARD.. "<< "\n";
-            if ( sensor_value(0) < 150){
+            if ( sensor_value(0) < 100){
                 speed = 2;
                 std::cout << " GO SLOWWWW \n";
             } else {
@@ -31,10 +31,10 @@ namespace {
                 speed = 2;
             }
 
-            if ( sensor_value(0) < 10  && sensor_value(2) > 15) { //turn left 90
+            if ( sensor_value(0) < 6  && sensor_value(2) > 15) { //turn left 90
                 std::cout << "FRONT SENSOR LESS THAN 10, sensor 0: "<< sensor_value(0) << ", sensor value 2: " << sensor_value(2) << "\n";
                 emit(Event("turn_left"));
-            } else if (sensor_value(0) < 10) {
+            } else if (sensor_value(0) < 6) {
                 emit(Event("turn_right"));
             }
 
@@ -74,7 +74,7 @@ namespace {
             if (step == 0 ){
                 track_velocity(-.5,0);
                 //turn robot ccw
-                if ( sensor_value(0) >= 11.5 ) {
+                if ( sensor_value(0) >= 7 ) {
                     step = 1;
                 //emit(Event(tick_name));
                  }
@@ -93,7 +93,7 @@ namespace {
                 condition = event == "turn_left" && angle() >= targetAngle || event == "turn_right" && angle() <= targetAngle;
                 if (condition){
                     //turn again if still facing wall
-                    if (sensor_value(0) < 10){
+                    if (sensor_value(0) < 6){
                         event == "turn_right" ? emit(Event("turn_right")) : emit(Event("turn_left"));
                     }
                     event == "turn_right" ? emit(Event("turn_right")) : emit(Event("turn_left"));

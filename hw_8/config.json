@@ -17,7 +17,7 @@
     "agents": [  
         {
             "definition": "defs/wanderer.json",
-            "style": { "fill": "powderblue", "stroke": "steelblue" },
+            "style": { "fill": "firebrick", "stroke": "red" },
             "position": {
                 "x": -350, 
                 "y": 170, 
@@ -31,7 +31,7 @@
     "statics": [
         {
             "_comment": "Wall: Left",
-            "style": { "fill": "mediumpurple", "stroke": "none" },
+            "style": { "fill": "midnightblue", "stroke": "none" },
             "shape": [
                 { "x": -350, "y": -200 },
                 { "x": -350,  "y": 150 },
@@ -41,7 +41,7 @@
         },
         {
             "_comment": "Wall: Left Inner 1",
-            "style": { "fill": "mediumpurple", "stroke": "none" },
+            "style": { "fill": "midnightblue", "stroke": "none" },
             "shape": [
                 { "x": -300, "y": -100 },
                 { "x": -300,  "y": 100 },
@@ -51,7 +51,7 @@
         },
         {
             "_comment": "Wall: Left Inner 2",
-            "style": { "fill": "mediumpurple", "stroke": "none" },
+            "style": { "fill": "midnightblue", "stroke": "none" },
             "shape": [
                 { "x": -250, "y": -100 },
                 { "x": -250,  "y": 50 },
@@ -61,7 +61,7 @@
         },
         {
             "_comment": "Outer Wall: Right with Exit",
-            "style": { "fill": "mediumpurple", "stroke": "none" },
+            "style": { "fill": "midnightblue", "stroke": "none" },
             "shape": [
                 { "x": 350, "y": -150 },
                 { "x": 350,  "y": 200 },
@@ -71,7 +71,7 @@
         },
         {
             "_comment": "Wall: Bottom",
-            "style": { "fill": "mediumpurple", "stroke": "none" },
+            "style": { "fill": "midnightblue", "stroke": "none" },
             "shape": [
                 { "x": -350, "y": 200 },
                 { "x": 350,  "y": 200 },
@@ -81,7 +81,7 @@
         },
         {
             "_comment": "Wall: Top",
-            "style": { "fill": "mediumpurple", "stroke": "none" },
+            "style": { "fill": "midnightblue", "stroke": "none" },
             "shape": [
                 { "x": -350, "y": -200 },
                 { "x": 350,  "y": -200 },
@@ -91,7 +91,7 @@
         },
         {
             "_comment": "inside wall: horizontal start",
-            "style": { "fill": "mediumpurple", "stroke": "none" },
+            "style": { "fill": "midnightblue", "stroke": "none" },
             "shape": [
                 { "x": -350, "y": 140 },
                 { "x": 300,  "y": 140 },
@@ -101,7 +101,7 @@
         },
         {
             "_comment": "inside wall: horizontal start 2nd",
-            "style": { "fill": "mediumpurple", "stroke": "none" },
+            "style": { "fill": "midnightblue", "stroke": "none" },
             "shape": [
                 { "x": -300, "y": 90 },
                 { "x": 350,  "y": 90 },
@@ -111,7 +111,7 @@
         },
         {
             "_comment": "inside wall: horizontal start 3rd",
-            "style": { "fill": "mediumpurple", "stroke": "none" },
+            "style": { "fill": "midnightblue", "stroke": "none" },
             "shape": [
                 { "x": -200, "y": 40 },
                 { "x": 300,  "y": 40 },
@@ -121,7 +121,7 @@
         },
         {
             "_comment": "inside wall: horizontal top",
-            "style": { "fill": "mediumpurple", "stroke": "none" },
+            "style": { "fill": "midnightblue", "stroke": "none" },
             "shape": [
                 { "x": -350, "y": -140 },
                 { "x": 300,  "y": -140 },
@@ -131,7 +131,7 @@
         },
         {
             "_comment": "inside wall: vertical a",
-            "style": { "fill": "mediumpurple", "stroke": "none" },
+            "style": { "fill": "midnightblue", "stroke": "none" },
             "shape": [
                 { "x": -200, "y": -150 },
                 { "x": -190,  "y": -150 },
@@ -141,7 +141,7 @@
         },
         {
             "_comment": "inside wall: horz b",
-            "style": { "fill": "mediumpurple", "stroke": "none" },
+            "style": { "fill": "midnightblue", "stroke": "none" },
             "shape": [
                 { "x": -150,  "y": -50 },
                 { "x": 100,  "y": -50 },
@@ -151,7 +151,7 @@
         },
         {
             "_comment": "inside wall: horz c",
-            "style": { "fill": "mediumpurple", "stroke": "none" },
+            "style": { "fill": "midnightblue", "stroke": "none" },
             "shape": [
                 { "x": -100, "y": -10 },
                 { "x": 100,  "y": -10 },
@@ -161,7 +161,7 @@
         },
         {
             "_comment": "inside wall: vertical d",
-            "style": { "fill": "mediumpurple", "stroke": "none" },
+            "style": { "fill": "midnightblue", "stroke": "none" },
             "shape": [
                 { "x": -150,  "y": -60 },
                 { "x": -140,  "y": -60 },
@@ -171,7 +171,7 @@
         },
         {
             "_comment": "inside wall: vertical f",
-            "style": { "fill": "mediumpurple", "stroke": "none" },
+            "style": { "fill": "midnightblue", "stroke": "none" },
             "shape": [
                 { "x": 100, "y": -60 },
                 { "x": 110,  "y": -60 },
@@ -181,7 +181,7 @@
         },
         {
             "_comment": "inside wall: horz g",
-            "style": { "fill": "mediumpurple", "stroke": "none" },
+            "style": { "fill": "midnightblue", "stroke": "none" },
             "shape": [
                 { "x": 160, "y": -10 },
                 { "x": 350,  "y": -10 },
@@ -191,7 +191,7 @@
         },
         {
             "_comment": "inside wall: horz h",
-            "style": { "fill": "mediumpurple", "stroke": "none" },
+            "style": { "fill": "midnightblue", "stroke": "none" },
             "shape": [
                 { "x": -150, "y": -100 },
                 { "x": 150,  "y": -100 },
@@ -201,7 +201,7 @@
         },
         {
             "_comment": "inside wall: vert i",
-            "style": { "fill": "mediumpurple", "stroke": "none" },
+            "style": { "fill": "midnightblue", "stroke": "none" },
             "shape": [
                 { "x": 150, "y": -100 },
                 { "x": 160,  "y": -100 },
@@ -211,7 +211,7 @@
         },
         {
             "_comment": "inside wall: horz l",
-            "style": { "fill": "mediumpurple", "stroke": "none" },
+            "style": { "fill": "midnightblue", "stroke": "none" },
             "shape": [
                 { "x": 350, "y": -100 },
                 { "x": 200,  "y": -100 },
@@ -221,7 +221,7 @@
         },
         {
             "_comment": "inside wall: vert j",
-            "style": { "fill": "mediumpurple", "stroke": "none" },
+            "style": { "fill": "midnightblue", "stroke": "none" },
             "shape": [
                 { "x": 200, "y": -100 },
                 { "x": 210,  "y": -100 },
@@ -231,7 +231,7 @@
         },
         {
             "_comment": "inside wall: horz k",
-            "style": { "fill": "mediumpurple", "stroke": "none" },
+            "style": { "fill": "midnightblue", "stroke": "none" },
             "shape": [
                 { "x": 300, "y": -60 },
                 { "x": 200,  "y": -60 },
