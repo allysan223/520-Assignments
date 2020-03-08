@@ -8,6 +8,8 @@
 #include "enviro.h"
 using namespace std::chrono;
 
+double targetAngle = 0.0; 
+
 namespace {
 
     using namespace enviro;
@@ -16,20 +18,25 @@ namespace {
         public:
         void entry(const Event& e) {
             std::cout << "MOVING FORWARD.. "<< "\n";
+            track_velocity(7,0);
         }
         void during() { 
-            track_velocity(2,0);
+            //track_velocity(5,0);
             if ( sensor_value(0) < 10  && sensor_value(2) > 15) { //turn left 90
                 std::cout << "FRONT SENSOR LESS THAN 10, sensor 0: "<< sensor_value(0) << ", sensor value 2: " << sensor_value(2) << "\n";
-                emit(Event(tick_name));
+                emit(Event("turn_left"));
+            } else if (sensor_value(0) < 10) {
+                emit(Event("turn_right"));
             }
-            if ( sensor_value(0) > 10  && sensor_value(2) < 9) { //turn right little
-                std::cout << "FRONT SENSOR LESS THAN 10, straighten to right "<< "\n";
-                emit(Event("tick_name_straight"));
+            if ( angle() > targetAngle ) { //turn right little
+                std::cout << "MOVING FORWARD, straighten to right "<< "\n";
+                track_velocity(5,-0.05);
+                //emit(Event("tick_name_straight"));
             }
-            if ( sensor_value(0) > 10  && sensor_value(1) < 9) { //turn left little
-                std::cout << "FRONT SENSOR LESS THAN 10, straighten to left "<< "\n";
-                emit(Event("tick_name_straight"));
+            if ( angle() < targetAngle) { //turn left little
+                std::cout << "MOVING FORWARD, straighten to left "<< "\n";
+                track_velocity(5,0.05);
+                //emit(Event("tick_name_straight"));
             }
       
         }
@@ -38,78 +45,60 @@ namespace {
         std::string tick_name;
     };
 
-    // class Rotating : public State, public AgentInterface {
-    //     public:
-    //     void entry(const Event& e) {
-    //         angle = M_PI/2+.5;
-    //         turningL = false;
-    //         turningR = false;
-    //         apply_force(-50, 0);
-    //     } //{ rate = rand() % 2 == 0 ? 2 : -2; }
-    //     void during() { 
-    //         if ( sensor_value(0) > 50  && (!turningL && !turningR)) {
-    //             emit(Event(tick_name));
-    //         }
-            
-    //         if ( sensor_value(2) > sensor_value(1) && sensor_value(2) > sensor_value(0) && (sensor_value(1) - sensor_value(2) < 10)) { //left sensor
-    //         //apply_force(0,-angle);
-    //         turningL = true;
-    //         track_velocity(0,-angle);
-    //         std::cout << "TURNN LEFTTT DURING \n";
-    //         } else if (sensor_value(1) > sensor_value(2) && sensor_value(1) > sensor_value(0)) { //right sensor
-    //             std::cout << "TURNN RIGHTT DURING \n";
-    //             turningR = true;
-    //             track_velocity(0,angle);
-    //             //apply_force(0,angle);
-    //         } 
-            
-    //         if (turningL)
-    //             track_velocity(0,-angle);
-    //         if (turningR)
-    //             track_velocity(0,angle);
-            
-    //         turningL = false;
-    //         turningR = false;
-    //         std::cout << "LEFT SENSOR: "<<  sensor_value(2) << " RIGHT SENSOR: " << sensor_value(1) << "\n";
-
-    //     }
-    //     void exit(const Event& e) {}
-    //     double rate, angle;
-    //     bool turningL, turningR;
-    //     int stopLeft, stopRight;
-    //     void set_tick_name(std::string s) { tick_name = s; }
-    //     std::string tick_name;        
-    // };
-
-    class RotatingL : public State, public AgentInterface {
+    class Rotating : public State, public AgentInterface {
         public:
         void entry(const Event& e) {
-            std::cout << "START TURNN LEFTTT: " << angle() << "\n";
-            apply_force(-45, 0);
+            event = e.name();
+            std::cout << "EVENT: " << event << ", START TURNN LEFTTT: " << angle() << "\n";
+            //apply_force(-45, 0);
             startAngle = angle();
+            step = 0;
+            //targetAngle = startAngle - M_PI/2;
+            targetAngle = event == "turn_right" ? startAngle + M_PI/2 : startAngle - M_PI/2;
         } //{ rate = rand() % 2 == 0 ? 2 : -2; }
         void during() {
             //back up if too close to wall while turning
-            if (sensor_value(0) < 8 && sensor_value(3) > 20){
-                apply_force(-10, 0);
-                std::this_thread::sleep_for(std::chrono::milliseconds(5));
-                std::cout << "Turning left, back up " << "\n";
+            if (step == 0 ){
+                track_velocity(-.5,0);
+                //turn robot ccw
+                if ( sensor_value(0) >= 10 ) {
+                    step = 1;
+                //emit(Event(tick_name));
+                 }
             }
-            //turn robot ccw
-            if ( angle() <= startAngle - M_PI/2 +.05 ) {
-                track_velocity(.05,-0.1);
-                emit(Event(tick_name));
+            if (step == 1){
+                event == "turn_right" ? track_velocity(.05,0.3) : track_velocity(.05,-0.3);
+                
+                //turn robot ccw
+                if (event == "turn_left" && angle() <= targetAngle ) {
+                    step = 2;
+                //emit(Event(tick_name));
+                 } else if (event == "turn_right" && angle() >= targetAngle ){
+                     step = 2;
+                 }
             }
-            prevSensorVal = sensor_value(0);
-            track_velocity(.05,-0.1);
+            if ( step == 2 ) {
+                //track_velocity(.05,0.05);
+                event == "turn_right" ? track_velocity(.05,-0.05) : track_velocity(.05,0.05);
+                if (event == "turn_left" && angle() >= targetAngle ){
+                    //emit(Event("turn_left"));
+                    event == "turn_right" ? emit(Event("turn_right")) : emit(Event("turn_left"));
+                } else if (event == "turn_right" && angle() <= targetAngle ){
+                    //emit(Event("turn_left"));
+                    event == "turn_right" ? emit(Event("turn_right")) : emit(Event("turn_left"));
+                }
+                
+            }
+
             angleVal = angle();
-            std::cout << "TURNN LEFTTT GOAL: " << startAngle - M_PI/2 << "\n";
+            std::cout << "TURNN LEFTTT GOAL: " << targetAngle << "\n";
             std::cout << "TURNN LEFTTT: " << angle() << " ,sensor 0: " << sensor_value(0) << " ,sensor 3: " << sensor_value(3) << "\n";
         }
         void exit(const Event& e) {}
-        double rate, angleVal, startAngle, prevSensorVal;
+        double rate, angleVal, startAngle;
         bool turningL, turningR;
-        int stopLeft, stopRight;
+        std::string event;
+        int step;
         void set_tick_name(std::string s) { tick_name = s; }
         std::string tick_name;        
     };
@@ -151,20 +140,21 @@ namespace {
             tick_name = "tick_" + std::to_string(rand()%1000); // use an agent specific generated 
                                                                // event name in case there are 
                                                                // multiple instances of this class
-            add_transition(tick_name, moving_forward, rotatingL);
-            add_transition(tick_name, rotatingL, moving_forward);
+            add_transition("turn_left", moving_forward, rotating);
+            add_transition("turn_left", rotating, moving_forward);
+            add_transition("turn_right", moving_forward, rotating);
+            add_transition("turn_right", rotating, moving_forward);
             add_transition("tick_name_straight", moving_forward, straighten);
             add_transition("tick_name_straight", straighten, moving_forward);
-            moving_forward.set_tick_name(tick_name);
-            rotatingL.set_tick_name(tick_name);
-            straighten.set_tick_name("tick_name_straight");
+            //moving_forward.set_tick_name(tick_name);
+            //rotating.set_tick_name("turn_left");
+            //straighten.set_tick_name("tick_name_straight");
 
         }
 
         MovingForward moving_forward;
         Straighten straighten;
-        //Rotating rotating;
-        RotatingL rotatingL;
+        Rotating rotating;
         std::string tick_name;
 
     };
