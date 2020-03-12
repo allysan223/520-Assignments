@@ -4,15 +4,24 @@
     "ip": "0.0.0.0",
     "port": 8765,
 
-    "buttons": [  
+    "buttons": [
         {
-            "name": "name",
-            "label": "Displayed Name",
+            "name": "start",
+            "label": "Start",
             "style": { "background": "white", "border-color": "black" }
-        }                                     
-            
-
+        },
+        {
+            "name": "stop",
+            "label": "Stop",
+            "style":  { "background": "white", "border-color": "black" }
+        },       
+        {
+            "name": "reset",
+            "label": "Reset",
+            "style":  { "background": "#abf", "border-color": "black" }
+        } 
     ],
+                                             
 
     "agents": [  
         {
@@ -85,8 +94,8 @@
             "shape": [
                 { "x": -350, "y": -200 },
                 { "x": 350,  "y": -200 },
-                { "x": 350,  "y": -190 },
-                { "x": -350, "y": -190 }
+                { "x": 350,  "y": -210 },
+                { "x": -350, "y": -210 }
             ]
         },
         {
@@ -123,9 +132,9 @@
             "_comment": "inside wall: horizontal top",
             "style": { "fill": "midnightblue", "stroke": "none" },
             "shape": [
-                { "x": -350, "y": -140 },
-                { "x": 300,  "y": -140 },
-                { "x": 300,  "y": -150 },
+                { "x": -350, "y": -160 },
+                { "x": 290,  "y": -160 },
+                { "x": 290,  "y": -150 },
                 { "x": -350, "y": -150 }
             ]
         },
@@ -195,16 +204,16 @@
             "shape": [
                 { "x": -150, "y": -100 },
                 { "x": 150,  "y": -100 },
-                { "x": 150,  "y": -92 },
-                { "x": -150,  "y": -92 }
+                { "x": 150,  "y": -110 },
+                { "x": -150,  "y": -110 }
             ]
         },
         {
             "_comment": "inside wall: vert i",
             "style": { "fill": "midnightblue", "stroke": "none" },
             "shape": [
-                { "x": 150, "y": -100 },
-                { "x": 160,  "y": -100 },
+                { "x": 150, "y": -110 },
+                { "x": 160,  "y": -110 },
                 { "x": 160,  "y": 0 },
                 { "x": 150,  "y": 0 }
             ]
@@ -215,16 +224,16 @@
             "shape": [
                 { "x": 350, "y": -100 },
                 { "x": 200,  "y": -100 },
-                { "x": 200,  "y": -92 },
-                { "x": 350,  "y": -92 }
+                { "x": 200,  "y": -110 },
+                { "x": 350,  "y": -110 }
             ]
         },
         {
             "_comment": "inside wall: vert j",
             "style": { "fill": "midnightblue", "stroke": "none" },
             "shape": [
-                { "x": 200, "y": -100 },
-                { "x": 210,  "y": -100 },
+                { "x": 200, "y": -110 },
+                { "x": 210,  "y": -110 },
                 { "x": 210,  "y": -50 },
                 { "x": 200,  "y": -50 }
             ]
