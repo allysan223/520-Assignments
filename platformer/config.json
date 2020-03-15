@@ -35,8 +35,8 @@
             "definition": "defs/health_bar.json",
             "style": { "fill": "none", "stroke": "black" },
             "position": {
-                "x": -500, 
-                "y": -300, 
+                "x": -350, 
+                "y": -220, 
                 "theta": 0
             }
         },
@@ -45,8 +45,8 @@
             "definition": "defs/health_bar.json",
             "style": { "fill": "none", "stroke": "black" },
             "position": {
-                "x": 500, 
-                "y": -300, 
+                "x": 150, 
+                "y": -220, 
                 "theta": 0
             }
         },
