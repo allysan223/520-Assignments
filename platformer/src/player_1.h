@@ -31,6 +31,7 @@ class GuyController : public Process, public AgentInterface {
         prevent_rotation();
         watch("keydown", [&](Event& e) {
             std::string k = e.value()["key"];
+            //shoot bullet in appropiate dirrection
             if ( k == "q" ) {
                 if (prevState == "right"){
                   Agent& bullet = add_agent("Bullet", 
@@ -54,23 +55,29 @@ class GuyController : public Process, public AgentInterface {
                 JUMP = true;
             } else if ( k == "a" ) {
                 LEFT = true;
+                prevState = "left";
             } else if ( k == "d" ) {
                 RIGHT = true;
+                prevState = "right";
             } 
         });
         watch("keyup", [&](Event& e) {
             std::string k = e.value()["key"];
             if ( k == "a" ) {
                 LEFT = false;
-                prevState = "left";
             } else if ( k == "d" ) {
                 RIGHT = false;
-                prevState = "right";
             }
         });     
         notice_collisions_with("Ghost", [&](Event &e) {
             teleport(0,135,0);
-        });               
+        });    
+
+
+        
+         
+ 
+       
     }
     void start() {}
 
@@ -97,6 +104,20 @@ class GuyController : public Process, public AgentInterface {
         }
         omni_apply_force(fx,G+fy);
         JUMP = false;
+
+                //decorations
+        if (LEFT){
+            decorate(R"(<g>
+                <circle cx=-5 cy=-3 r=2 style='fill:black'></circle>
+                </g>)");   
+        } else if (RIGHT){
+            decorate(R"(<g>
+                <circle cx=5 cy=-3 r=2 style='fill:black'></circle></g>)");   
+        } else {
+            decorate(R"(<g>
+                <circle cx=-5 cy=-3 r=2 style='fill:black'></circle>
+                <circle cx=5 cy=-3 r=2 style='fill:black'></circle></g>)");    
+        }
     }
 
     void stop() {}
