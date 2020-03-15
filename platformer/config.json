@@ -1,6 +1,6 @@
 {
 
-    "name": "My Enviro Project",
+    "name": "Get the star to win!",
     "ip": "0.0.0.0",
     "port": 8765,
 
@@ -30,11 +30,22 @@
                 "theta": 0
             }
         },
-        {
+        {   
+            "comment": "player1 health",
             "definition": "defs/health_bar.json",
             "style": { "fill": "none", "stroke": "black" },
             "position": {
                 "x": -500, 
+                "y": -300, 
+                "theta": 0
+            }
+        },
+        {   
+            "comment": "player2 health",
+            "definition": "defs/health_bar.json",
+            "style": { "fill": "none", "stroke": "black" },
+            "position": {
+                "x": 500, 
                 "y": -300, 
                 "theta": 0
             }

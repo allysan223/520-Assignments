@@ -29,13 +29,17 @@ class GuyController : public Process, public AgentInterface {
         return height() > H_MIN;
     }
 
+    void reset_health(){
+        Agent &health_bar = find_agent(3);
+        health_bar.decorate(R"(<rect x=0 y=-10 width=200 height=20 fill="green" />)");
+    }
+
     void init() {
         //data for health bar
         for (int i = 0; i <= 200; i +=20){
             health_len.push_back(std::to_string(i)); 
         }
-        Agent &health_bar = find_agent(3);
-        health_bar.decorate(R"(<rect x=0 y=-10 width=200 height=20 fill="green" />)");
+        reset_health();
         
         label("P1", -8, -20 );
         prevent_rotation();
@@ -133,8 +137,10 @@ class GuyController : public Process, public AgentInterface {
             //health_bar.set_style(ATTACKED_STYLE);
             health_bar.decorate(decoration);
             healthCounter++;
-            if (healthCounter == 11)
-                healthCounter = 0;
+            if (healthCounter == 11){
+                reset_health();
+                teleport(0,135,0);
+                healthCounter = 0;}
             }); 
     }
 
