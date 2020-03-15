@@ -28,6 +28,7 @@ class GuyController : public Process, public AgentInterface {
     }
 
     void init() {
+        label("P1", -8, -20 );
         prevent_rotation();
         watch("keydown", [&](Event& e) {
             std::string k = e.value()["key"];
@@ -71,7 +72,14 @@ class GuyController : public Process, public AgentInterface {
         });     
         notice_collisions_with("Ghost", [&](Event &e) {
             teleport(0,135,0);
-        });    
+        });
+        notice_collisions_with("Bullet", [&](Event &e) {
+            remove_agent(e.value()["id"]);
+            Agent &health_bar = find_agent(3);
+            //health_bar.set_style(ATTACKED_STYLE);
+            health_bar.decorate(R"(
+                <rect x=-100 y=-10 width="150" height="20" fill="green" />)");
+        });     
 
 
         
@@ -122,6 +130,8 @@ class GuyController : public Process, public AgentInterface {
 
     void stop() {}
 
+    int health[11];
+
     bool LEFT, RIGHT, JUMP;
     double vx;
 
@@ -138,6 +148,13 @@ class GuyController : public Process, public AgentInterface {
                    {"strokeWidth", "5px"},
                    {"strokeOpacity", "0.25"}
                };
+    const json ATTACKED_STYLE = { 
+                   {"fill", "red"}, 
+                   {"stroke", "#888"}, 
+                   {"strokeWidth", "5px"},
+                   {"strokeOpacity", "0.25"}
+               };
+
 
 };
 

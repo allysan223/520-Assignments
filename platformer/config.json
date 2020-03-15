@@ -31,6 +31,15 @@
             }
         },
         {
+            "definition": "defs/health_bar.json",
+            "style": { "fill": "none", "stroke": "black" },
+            "position": {
+                "x": -500, 
+                "y": -300, 
+                "theta": 0
+            }
+        },
+        {
             "definition": "defs/ghost.json",
             "style": { "fill": "lightgreen", "stroke": "black" },
             "position": {
@@ -43,8 +52,8 @@
             "definition": "defs/star.json",
             "style": { "fill": "yellow", "stroke": "black" },
             "position": {
-                "x": 300, 
-                "y": 20, 
+                "x": -300, 
+                "y": -120, 
                 "theta": 0
             }
         }
@@ -88,7 +97,6 @@
                 { "x": -350, "y": -190 }
             ]
         },
-
         {
             "style": { "fill": "gray", "stroke": "none" },
             "shape": [
@@ -98,7 +106,15 @@
                 { "x": -350, "y": 115 }
             ]
         },
-
+        {
+            "style": { "fill": "gray", "stroke": "none" },
+            "shape": [
+                { "x": -350, "y": -100 },
+                { "x": -160, "y": -100 },
+                { "x": -160, "y": -90 },
+                { "x": -350, "y": -90 }
+            ]
+        },
         {
             "style": { "fill": "gray", "stroke": "none" },
             "shape": [
@@ -125,7 +141,17 @@
                 { "x": -50, "y": -30 },
                 { "x": 200, "y": -30 }
             ]
-        }   
+        },
+        {
+            "comment": "corner step",
+            "style": { "fill": "gray", "stroke": "none" },
+            "shape": [
+                { "x": 350, "y": 200 },
+                { "x": 225, "y": 200 },
+                { "x": 225, "y": 150 },
+                { "x": 350, "y": 150 }
+            ]
+        }  
 
     ]
 
