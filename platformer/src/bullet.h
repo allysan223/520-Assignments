@@ -18,7 +18,7 @@ class BulletController : public Process, public AgentInterface {
     }
     void start() {}
     void update() {
-        if ( counter++ > 20 ) {
+        if (  abs(vx()) < 2 ) {
             remove_agent(id());
         }
     }

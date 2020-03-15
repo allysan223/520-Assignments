@@ -3,6 +3,8 @@
 
 #include "enviro.h"
 #include <math.h>
+#include <string>
+
 
 using namespace enviro;
 
@@ -28,6 +30,13 @@ class GuyController : public Process, public AgentInterface {
     }
 
     void init() {
+        //data for health bar
+        for (int i = 0; i <= 200; i +=20){
+            health_len.push_back(std::to_string(i)); 
+        }
+        Agent &health_bar = find_agent(3);
+        health_bar.decorate(R"(<rect x=0 y=-10 width=200 height=20 fill="green" />)");
+        
         label("P1", -8, -20 );
         prevent_rotation();
         watch("keydown", [&](Event& e) {
@@ -70,21 +79,11 @@ class GuyController : public Process, public AgentInterface {
                 RIGHT = false;
             }
         });     
+        
         notice_collisions_with("Ghost", [&](Event &e) {
             teleport(0,135,0);
         });
-        notice_collisions_with("Bullet", [&](Event &e) {
-            remove_agent(e.value()["id"]);
-            Agent &health_bar = find_agent(3);
-            //health_bar.set_style(ATTACKED_STYLE);
-            health_bar.decorate(R"(
-                <rect x=-100 y=-10 width="150" height="20" fill="green" />)");
-        });     
-
-
-        
-         
- 
+            
        
     }
     void start() {}
@@ -113,7 +112,7 @@ class GuyController : public Process, public AgentInterface {
         omni_apply_force(fx,G+fy);
         JUMP = false;
 
-                //decorations
+        //decorations
         if (LEFT){
             decorate(R"(<g>
                 <circle cx=-5 cy=-3 r=2 style='fill:black'></circle>
@@ -126,16 +125,29 @@ class GuyController : public Process, public AgentInterface {
                 <circle cx=-5 cy=-3 r=2 style='fill:black'></circle>
                 <circle cx=5 cy=-3 r=2 style='fill:black'></circle></g>)");    
         }
+        
+        notice_collisions_with("Bullet", [&](Event &e) {
+            remove_agent(e.value()["id"]);
+            Agent &health_bar = find_agent(3);
+            decoration = "R\"(<rect x=0 y=-10 width=" + health_len[10-healthCounter] + " height=20 fill=\"green\" />)\"";
+            //health_bar.set_style(ATTACKED_STYLE);
+            health_bar.decorate(decoration);
+            healthCounter++;
+            if (healthCounter == 11)
+                healthCounter = 0;
+            }); 
     }
 
     void stop() {}
 
-    int health[11];
+    
+    int healthCounter;
 
     bool LEFT, RIGHT, JUMP;
     double vx;
 
-    std::string prevState;
+    std::string prevState, decoration;
+    vector<std::string> health_len;
 
     const double VEL_X = 25;
     const double JUMP_F = -2200;
