@@ -32,6 +32,7 @@ class GuyController : public Process, public AgentInterface {
     void reset_health() {
         Agent &health_bar = find_agent(4);
         health_bar.decorate(R"(<rect x=0 y=-10 width=200 height=20 fill="green" />)"); 
+        healthCounter++;
     }
 
     void init() {
@@ -140,7 +141,7 @@ class GuyController : public Process, public AgentInterface {
             if (healthCounter == 11){
                 reset_health();
                 teleport(0,135,0);
-                healthCounter = 0;}
+                healthCounter = 1;}
             }); 
     }
 
