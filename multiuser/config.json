@@ -5,7 +5,35 @@
     "port": 8765,
     "buttons": [],
 
-    "agents": [  
+    "agents": [
+        {   
+            "comment": "player1 health",
+            "definition": "defs/health_bar.json",
+            "style": { "fill": "none", "stroke": "black" },
+            "position": {
+                "x": -350, 
+                "y": -220, 
+                "theta": 0
+            }
+        },
+        {
+            "definition": "defs/ghost.json",
+            "style": { "fill": "lightgreen", "stroke": "black" },
+            "position": {
+                "x": 0, 
+                "y": 80, 
+                "theta": 0
+            }
+        },
+        {
+            "definition": "defs/star.json",
+            "style": { "fill": "yellow", "stroke": "black" },
+            "position": {
+                "x": -300, 
+                "y": -120, 
+                "theta": 0
+            }
+        }
                           
     ],
 
