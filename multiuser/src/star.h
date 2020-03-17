@@ -11,7 +11,7 @@ class BumperController : public Process, public AgentInterface {
     BumperController() : Process(), AgentInterface() {}
 
     void init() {
-        notice_collisions_with("Player1", [&](Event &e) {
+        notice_collisions_with("Guy", [&](Event &e) {
             remove_agent(id());
             Agent& player = find_agent(e.value()["id"]); 
             std::cout << e.value()["id"] << "\n";
