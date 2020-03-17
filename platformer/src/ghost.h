@@ -23,6 +23,8 @@ class GhostController : public Process, public AgentInterface {
         decorate(R"(<g>
             <circle cx=-5 cy=-3 r=2 style='fill:black'></circle>
             <circle cx=5 cy=-3 r=2 style='fill:black'></circle></g>)");
+
+        std::cout << "ghost init done \n";
     }
 
     void start() {}

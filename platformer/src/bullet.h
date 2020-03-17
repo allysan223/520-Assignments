@@ -14,7 +14,8 @@ class BulletController : public Process, public AgentInterface {
         notice_collisions_with("Ghost", [&](Event &e) {
             remove_agent(e.value()["id"]);
             remove_agent(id());
-        });              
+        });  
+        std::cout << "bullet init done \n";            
     }
     void start() {}
     void update() {

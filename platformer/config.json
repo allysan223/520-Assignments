@@ -7,45 +7,12 @@
     "buttons": [],
 
     "agents": [  
-        {
-            "definition": "defs/bullet.json",
-            "style": { "fill": "green", "stroke": "#888", "strokeWidth": "5px", "strokeOpacity": "0.25" },
-            "position": {"x": -400, "y": -200, "theta": 3.14 }
-        },
-        {
-            "definition": "defs/player_1.json",
-            "style": { "fill": "lightblue", "stroke": "black" },
-            "position": {
-                "x": -35, 
-                "y": 135, 
-                "theta": 0
-            }
-        },
-        {
-            "definition": "defs/player_2.json",
-            "style": { "fill": "red", "stroke": "black" },
-            "position": {
-                "x": 35, 
-                "y": 135, 
-                "theta": 0
-            }
-        },
         {   
             "comment": "player1 health",
             "definition": "defs/health_bar.json",
             "style": { "fill": "none", "stroke": "black" },
             "position": {
                 "x": -350, 
-                "y": -220, 
-                "theta": 0
-            }
-        },
-        {   
-            "comment": "player2 health",
-            "definition": "defs/health_bar.json",
-            "style": { "fill": "none", "stroke": "black" },
-            "position": {
-                "x": 150, 
                 "y": -220, 
                 "theta": 0
             }
@@ -69,6 +36,26 @@
             }
         }
 
+    ],
+
+    "references": [
+        {
+            "definition": "defs/player_1.json",
+            "style": { "fill": "azure", "stroke": "black" },
+            "position": { "x": 0, "y": 0, "theta": 0 }
+        },
+        {
+            "definition": "defs/bullet.json",
+            "style": { "fill": "yellow", "stroke": "black" },
+            "position": { "x": 0, "y": 0, "theta": 0 }
+        }           
+    ],
+
+    "invisibles": [
+        {
+            "definition": "defs/coordinator.json",
+            "rendered": false
+        }   
     ],
 
     "statics": [

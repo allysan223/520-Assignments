@@ -11,10 +11,11 @@ class HealthController : public Process, public AgentInterface {
     HealthController() : Process(), AgentInterface() {}
 
     void init() {
-        Agent &health_bar_p1 = find_agent(3);
-        health_bar_p1.label("Player 1:", 0, -15 );
-        Agent &health_bar_p2 = find_agent(4);
-        health_bar_p2.label("Player 2:", 0, -15 );
+        // Agent &health_bar_p1 = find_agent(3);
+        // health_bar_p1.label("Player 1:", 0, -15 );
+        // Agent &health_bar_p2 = find_agent(4);
+        // health_bar_p2.label("Player 2:", 0, -15 );
+        std::cout << "health_bar init done \n";
     }
     void start() {}
     void update() {}

@@ -30,8 +30,8 @@ class GuyController : public Process, public AgentInterface {
     }
 
     void reset_health(){
-        Agent &health_bar = find_agent(3);
-        health_bar.decorate(R"(<rect x=0 y=-10 width=200 height=20 fill="green" />)");
+        // Agent &health_bar = find_agent(3);
+        // health_bar.decorate(R"(<rect x=0 y=-10 width=200 height=20 fill="green" />)");
         healthCounter++;
     }
 
@@ -45,43 +45,48 @@ class GuyController : public Process, public AgentInterface {
         label("P1", -8, -20 );
         prevent_rotation();
         watch("keydown", [&](Event& e) {
-            std::string k = e.value()["key"];
-            //shoot bullet in appropiate dirrection
-            if ( k == "q" ) {
-                if (prevState == "right"){
-                  Agent& bullet = add_agent("Bullet", 
-                                            x() + 17*cos(angle()), 
-                                            y() + 17*sin(angle()), 
-                                            angle(), 
-                                            BULLET_STYLE);
-                    bullet.apply_force(50,0);
-                }
-                if (prevState == "left") {
+            if ( e.value()["client_id"] == get_client_id() ) {
+                //auto k = e.value()["key"].get<std::string>();
+                std::string k = e.value()["key"];
+                //shoot bullet in appropiate dirrection
+                if ( k == "q" ) {
+                    if (prevState == "right"){
                     Agent& bullet = add_agent("Bullet", 
-                                            x() - 17*cos(-angle()), 
-                                            y() - 17*sin(-angle()), 
-                                            -angle(), 
-                                            BULLET_STYLE);
-                    bullet.apply_force(-50,0);
-                }
-                
-                  //firing = true;
-            } else if ( k == "w" && ! airborne() ) {
-                JUMP = true;
-            } else if ( k == "a" ) {
-                LEFT = true;
-                prevState = "left";
-            } else if ( k == "d" ) {
-                RIGHT = true;
-                prevState = "right";
-            } 
+                                                x() + 17*cos(angle()), 
+                                                y() + 17*sin(angle()), 
+                                                angle(), 
+                                                BULLET_STYLE);
+                        bullet.apply_force(50,0);
+                    }
+                    if (prevState == "left") {
+                        Agent& bullet = add_agent("Bullet", 
+                                                x() - 17*cos(-angle()), 
+                                                y() - 17*sin(-angle()), 
+                                                -angle(), 
+                                                BULLET_STYLE);
+                        bullet.apply_force(-50,0);
+                    }
+                    
+                    //firing = true;
+                } else if ( k == "w" && ! airborne() ) {
+                    JUMP = true;
+                } else if ( k == "a" ) {
+                    LEFT = true;
+                    prevState = "left";
+                } else if ( k == "d" ) {
+                    RIGHT = true;
+                    prevState = "right";
+                } 
+            }
         });
         watch("keyup", [&](Event& e) {
-            std::string k = e.value()["key"];
-            if ( k == "a" ) {
-                LEFT = false;
-            } else if ( k == "d" ) {
-                RIGHT = false;
+            if ( e.value()["client_id"] == get_client_id() ) {
+                std::string k = e.value()["key"];
+                if ( k == "a" ) {
+                    LEFT = false;
+                } else if ( k == "d" ) {
+                    RIGHT = false;
+                }
             }
         });     
         
@@ -89,32 +94,33 @@ class GuyController : public Process, public AgentInterface {
             teleport(0,135,0);
         });
             
-       
+    std::cout << "player1 init done \n";   
     }
     void start() {}
 
     void update() {
+        std::cout << "player1 start update \n";
         double fx;
         double fy = JUMP ? JUMP_F : 0;
-        if ( !airborne() ) {
-            if ( RIGHT ) {
-                vx = VEL_X;
-            } if ( LEFT ) {
-                vx = -VEL_X;
-            } else if ( !RIGHT && !LEFT ) {
-                vx = 0;
-            }
-            fx = -K_X*(velocity().x-vx);
-        } else {
-            if ( RIGHT ) {
-                vx = 0.1*VEL_X;
-            } if ( LEFT ) {
-                vx = -0.1*VEL_X;
-            }            
-            fx = 0;
-            fx = -K_X*(velocity().x-vx);
-        }
-        omni_apply_force(fx,G+fy);
+        // if ( !airborne() ) {
+        //     if ( RIGHT ) {
+        //         vx = VEL_X;
+        //     } if ( LEFT ) {
+        //         vx = -VEL_X;
+        //     } else if ( !RIGHT && !LEFT ) {
+        //         vx = 0;
+        //     }
+        //     fx = -K_X*(velocity().x-vx);
+        // } else {
+        //     if ( RIGHT ) {
+        //         vx = 0.1*VEL_X;
+        //     } if ( LEFT ) {
+        //         vx = -0.1*VEL_X;
+        //     }            
+        //     fx = 0;
+        //     fx = -K_X*(velocity().x-vx);
+        // }
+        // omni_apply_force(fx,G+fy);
         JUMP = false;
 
         //decorations
@@ -131,18 +137,20 @@ class GuyController : public Process, public AgentInterface {
                 <circle cx=5 cy=-3 r=2 style='fill:black'></circle></g>)");    
         }
         
-        notice_collisions_with("Bullet", [&](Event &e) {
-            remove_agent(e.value()["id"]);
-            Agent &health_bar = find_agent(3);
-            decoration = "R\"(<rect x=0 y=-10 width=" + health_len[10-healthCounter] + " height=20 fill=\"green\" />)\"";
-            //health_bar.set_style(ATTACKED_STYLE);
-            health_bar.decorate(decoration);
-            healthCounter++;
-            if (healthCounter == 11){
-                reset_health();
-                teleport(0,135,0);
-                healthCounter = 1;}
-            }); 
+        // notice_collisions_with("Bullet", [&](Event &e) {
+        //     remove_agent(e.value()["id"]);
+        //     Agent &health_bar = find_agent(3);
+        //     decoration = "R\"(<rect x=0 y=-10 width=" + health_len[10-healthCounter] + " height=20 fill=\"green\" />)\"";
+        //     //health_bar.set_style(ATTACKED_STYLE);
+        //     health_bar.decorate(decoration);
+        //     healthCounter++;
+        //     if (healthCounter == 11){
+        //         reset_health();
+        //         teleport(0,135,0);
+        //         healthCounter = 1;}
+        //     }); 
+
+        std::cout << "player update done \n";
     }
 
     void stop() {}
