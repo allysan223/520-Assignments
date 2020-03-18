@@ -94,6 +94,10 @@ class GuyController : public Process, public AgentInterface {
     }
     void start() {}
     void update() {
+        if (sensor_value(0) > 900)
+            teleport(0,100,0);
+
+
         double fx;
         double fy = JUMP ? JUMP_F : 0;
         if ( !airborne() ) {
