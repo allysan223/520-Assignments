@@ -124,29 +124,28 @@ class GuyController : public Process, public AgentInterface {
         JUMP = false;
 
         //decorations
-        if (LEFT){
-            decorate(R"(<g>
-                <circle cx=-5 cy=-3 r=2 style='fill:black'></circle>
-                </g>)");   
-        } else if (RIGHT){
-            decorate(R"(<g>
-                <circle cx=5 cy=-3 r=2 style='fill:black'></circle></g>)");   
-        } else {
-            decorate(R"(<g>
-                <circle cx=-5 cy=-3 r=2 style='fill:black'></circle>
-                <circle cx=5 cy=-3 r=2 style='fill:black'></circle></g>)");    
+        if (LEFT){ 
+            decoration = "R\"(<g>"
+                "<rect x=-20 y=-40 width=" + health_len[10-healthCounter] + " height=5 fill=\"red\" />"
+                "<circle cx=-5 cy=-3 r=2 style='fill:black'></circle>"
+                "</g>)\"";  
+        } else if (RIGHT){  
+            decoration = "R\"(<g>"
+                "<rect x=-20 y=-40 width=" + health_len[10-healthCounter] + " height=5 fill=\"red\" />"
+                "<circle cx=5 cy=-3 r=2 style='fill:black'></circle>"
+                "</g>)\"";   
+        } else {   
+            decoration = "R\"(<g>"
+                "<rect x=-20 y=-40 width=" + health_len[10-healthCounter] + " height=5 fill=\"red\" />"
+                "<circle cx=-5 cy=-3 r=2 style='fill:black'></circle>"
+                "<circle cx=5 cy=-3 r=2 style='fill:black'></circle>"
+                "</g>)\"";  
         }
         
-        decoration = "R\"(<rect x=-20 y=-40 width=" + health_len[10-healthCounter] + " height=5 fill=\"red\" />)\"";
-        //decoration = "R\"(<rect x=-10 y=-20 width=10 height=20 fill=\"red\" />)\"";
         decorate(decoration);
         
         notice_collisions_with("Bullet", [&](Event &e) {
             remove_agent(e.value()["id"]);
-            //Agent &health_bar = find_agent(3);
-            //decoration = "R\"(<rect x=0 y=-10 width=" + health_len[10-healthCounter] + " height=20 fill=\"green\" />)\"";
-            //health_bar.decorate(decoration);
-            //decorate(decoration);
             healthCounter++;
             if (healthCounter == 10){
                 reset_health();
