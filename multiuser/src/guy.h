@@ -2,6 +2,7 @@
 #define __PLAYER_AGENT__H 
 
 #include "enviro.h"
+#include <string>
 
 using namespace enviro;
 
@@ -16,7 +17,7 @@ double min(double a, double b) {
 class GuyController : public Process, public AgentInterface {
 
     public:
-    GuyController() : Process(), AgentInterface(), LEFT(false), RIGHT(false), JUMP(false) {}
+    GuyController() : Process(), AgentInterface(), LEFT(false), RIGHT(false), JUMP(false), healthCounter(0) {}
 
     double height() {
         return min(sensor_value(0), sensor_value(1));
@@ -34,9 +35,10 @@ class GuyController : public Process, public AgentInterface {
 
     void init() {
         //data for health bar
-        for (int i = 0; i <= 200; i +=20){
+        for (int i = 0; i <= 50; i +=5){
             health_len.push_back(std::to_string(i)); 
         }
+        std::cout<< health_len.size() << "\n";
         reset_health();
         
 
@@ -135,14 +137,18 @@ class GuyController : public Process, public AgentInterface {
                 <circle cx=5 cy=-3 r=2 style='fill:black'></circle></g>)");    
         }
         
+        decoration = "R\"(<rect x=-20 y=-40 width=" + health_len[10-healthCounter] + " height=5 fill=\"red\" />)\"";
+        //decoration = "R\"(<rect x=-10 y=-20 width=10 height=20 fill=\"red\" />)\"";
+        decorate(decoration);
+        
         notice_collisions_with("Bullet", [&](Event &e) {
             remove_agent(e.value()["id"]);
             //Agent &health_bar = find_agent(3);
             //decoration = "R\"(<rect x=0 y=-10 width=" + health_len[10-healthCounter] + " height=20 fill=\"green\" />)\"";
             //health_bar.decorate(decoration);
-            decorate(decoration);
+            //decorate(decoration);
             healthCounter++;
-            if (healthCounter == 11){
+            if (healthCounter == 10){
                 reset_health();
                 teleport(0,135,0);
                 healthCounter = 1;}
