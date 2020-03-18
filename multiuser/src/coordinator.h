@@ -2,21 +2,32 @@
 #define __COORDINATOR_AGENT__H 
 
 #include "enviro.h"
+#include <iostream>
+#include <string>
 
 using namespace enviro;
+using namespace std;
 
 class CoordinatorController : public Process, public AgentInterface {
 
     public:
-    CoordinatorController() : Process(), AgentInterface() {}
+    CoordinatorController() : Process(), AgentInterface(), playerCount(1) {}
 
     void init() {
         watch("connection", [&](Event e) {
             if ( ! e.value()["client_id"].is_null() ) {
                 std::cout << "Connection from " << e.value() << "\n";
-                Agent& a = add_agent("Guy", 0, y, 0, {{"fill","gray"},{"stroke","black"}});
+                Agent& a = add_agent("Guy", x, 100, 0, {{"fill","gray"},{"stroke","black"}});
                 a.set_client_id(e.value()["client_id"]);
-                y += 50;
+                x += 50;
+                a.label("P"+to_string(playerCount), -8, -20 );
+                // Agent& health = add_agent("HealthBar", -600, y, 0, {{"fill","gray"},{"stroke","black"}});
+                // std::cout << e.value()["client_id"] << "\n";
+                // healthID = e.value()["client_id"].get<std::string>()+"health";
+                // std::cout << healthID << "\n";
+                // health.set_client_id(healthID);
+                playerCount++;
+                a.teleport(x,100,0);
             }
         });
     }
@@ -24,7 +35,9 @@ class CoordinatorController : public Process, public AgentInterface {
     void update() {}
     void stop() {}
 
-    double y = -150;
+    double x = -150;
+    int playerCount;
+    std::string healthID;
 
 };
 

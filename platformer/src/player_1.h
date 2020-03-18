@@ -93,34 +93,32 @@ class GuyController : public Process, public AgentInterface {
         notice_collisions_with("Ghost", [&](Event &e) {
             teleport(0,135,0);
         });
-            
-    std::cout << "player1 init done \n";   
+              
     }
     void start() {}
 
     void update() {
-        std::cout << "player1 start update \n";
         double fx;
         double fy = JUMP ? JUMP_F : 0;
-        // if ( !airborne() ) {
-        //     if ( RIGHT ) {
-        //         vx = VEL_X;
-        //     } if ( LEFT ) {
-        //         vx = -VEL_X;
-        //     } else if ( !RIGHT && !LEFT ) {
-        //         vx = 0;
-        //     }
-        //     fx = -K_X*(velocity().x-vx);
-        // } else {
-        //     if ( RIGHT ) {
-        //         vx = 0.1*VEL_X;
-        //     } if ( LEFT ) {
-        //         vx = -0.1*VEL_X;
-        //     }            
-        //     fx = 0;
-        //     fx = -K_X*(velocity().x-vx);
-        // }
-        // omni_apply_force(fx,G+fy);
+        if ( !airborne() ) {
+            if ( RIGHT ) {
+                vx = VEL_X;
+            } if ( LEFT ) {
+                vx = -VEL_X;
+            } else if ( !RIGHT && !LEFT ) {
+                vx = 0;
+            }
+            fx = -K_X*(velocity().x-vx);
+        } else {
+            if ( RIGHT ) {
+                vx = 0.1*VEL_X;
+            } if ( LEFT ) {
+                vx = -0.1*VEL_X;
+            }            
+            fx = 0;
+            fx = -K_X*(velocity().x-vx);
+        }
+        omni_apply_force(fx,G+fy);
         JUMP = false;
 
         //decorations
@@ -150,7 +148,6 @@ class GuyController : public Process, public AgentInterface {
         //         healthCounter = 1;}
         //     }); 
 
-        std::cout << "player update done \n";
     }
 
     void stop() {}

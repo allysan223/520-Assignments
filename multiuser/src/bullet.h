@@ -8,13 +8,18 @@ using namespace enviro;
 class BulletController : public Process, public AgentInterface {
 
     public:
-    BulletController() : Process(), AgentInterface(), counter(0) {}
+    BulletController() : Process(), AgentInterface() {}
 
-    void init() {             
+    void init() {
+        notice_collisions_with("Ghost", [&](Event &e) {
+            remove_agent(e.value()["id"]);
+            remove_agent(id());
+        });  
+        std::cout << "bullet init done \n";            
     }
     void start() {}
     void update() {
-        if ( counter++ > 20 ) {
+        if (  abs(vx()) < 2 ) {
             remove_agent(id());
         }
     }
