@@ -17,7 +17,12 @@ double min(double a, double b) {
 class GuyController : public Process, public AgentInterface {
 
     public:
-    GuyController() : Process(), AgentInterface(), LEFT(false), RIGHT(false), JUMP(false), healthCounter(0) {}
+    GuyController() : Process(), AgentInterface(), LEFT(false), RIGHT(false), JUMP(false), healthCounter(0) {
+        //init health bar vector
+        for (int i = 0; i <= 50; i +=5){
+            health_len.push_back(std::to_string(i)); 
+        }
+    }
 
     double height() {
         return min(sensor_value(0), sensor_value(1));
@@ -28,20 +33,11 @@ class GuyController : public Process, public AgentInterface {
     }
 
     void reset_health(){
-        // Agent &health_bar = find_agent(3);
-        // health_bar.decorate(R"(<rect x=0 y=-10 width=200 height=20 fill="green" />)");
         healthCounter++;
     }
 
     void init() {
-        //data for health bar
-        for (int i = 0; i <= 50; i +=5){
-            health_len.push_back(std::to_string(i)); 
-        }
-        std::cout<< health_len.size() << "\n";
         reset_health();
-        
-
         prevent_rotation();
         watch("keydown", [&](Event& e) {
             if ( e.value()["client_id"] == get_client_id() ) {
@@ -170,7 +166,7 @@ class GuyController : public Process, public AgentInterface {
     const double G = 500; //600
     const double H_MIN = 1.0;
     const json BULLET_STYLE = { 
-                   {"fill", "green"}, 
+                   {"fill", "slategrey"}, 
                    {"stroke", "#888"}, 
                    {"strokeWidth", "5px"},
                    {"strokeOpacity", "0.25"}

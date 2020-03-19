@@ -6,16 +6,7 @@
     "buttons": [],
 
     "agents": [
-        {   
-            "comment": "player1 health",
-            "definition": "defs/health_bar.json",
-            "style": { "fill": "none", "stroke": "black" },
-            "position": {
-                "x": -350, 
-                "y": -220, 
-                "theta": 0
-            }
-        },
+
         {
             "definition": "defs/ghost.json",
             "style": { "fill": "lightgreen", "stroke": "black" },
